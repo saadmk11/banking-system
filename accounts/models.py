@@ -40,6 +40,7 @@ class User(AbstractUser):
     country = models.CharField(max_length=256)
     nationality = models.CharField(max_length=256)
     Occupation = models.CharField(max_length=256)
+    balance = models.DecimalField(default=0, max_digits=12, decimal_places=2)
     picture = models.ImageField(null=True, 
                                 blank=True, 
                                 height_field="height_field", 

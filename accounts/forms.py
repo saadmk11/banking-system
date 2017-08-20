@@ -31,3 +31,23 @@ class UserRegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class UserLoginForm(forms.Form):
+    account_no = forms.IntegerField(label="Account Number")
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self, *args, **kwargs):
+        account_no = self.cleaned_data.get("account_no")
+        password = self.cleaned_data.get("password")
+
+        if account_no and password:
+            user = authenticate(account_no=account_no, password=password)
+            if not user:
+                raise forms.ValidationError("Account Does Not Exist.")
+            if not user.check_password(password):
+                raise forms.ValidationError("Password Does not Match.")
+            if not user.is_active:
+                raise forms.ValidationError("Account is not Active.")
+
+        return super(UserLoginForm, self).clean(*args, **kwargs)
