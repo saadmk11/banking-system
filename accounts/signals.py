@@ -6,27 +6,11 @@ from .models import User
 
 @receiver(pre_save, sender=User)
 def create_account_no(sender, instance, *args, **kwargs):
-    largest = User.objects.all().aggregate(Max("account_no"))
-    num = largest.get('account_no__max')
+    if instance.account_no == "None":
+        largest = User.objects.all().aggregate(Max("account_no"))
+        num = largest.get('account_no__max')
 
-    if num != None:
-        instance.account_no = num + 1
-    else:
-        instance.account_no = 10000000
-
-
-
-    # if instance.account_no == None:
-    #     largest = User.objects.all().aggregate(Max("account_no"))
-    #     num = largest.get('account_no__max')
-
-    #     if num != None:
-    #         instance.account_no = num + 1
-    #     else:
-    #         instance.account_no = 10000000
-    # else:
-    #     pass
-
-
-
-
+        if num != None:
+            instance.account_no = num + 1
+        else:
+            instance.account_no = 10000000
