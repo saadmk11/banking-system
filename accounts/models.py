@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
-
+from .managers import UserManager
 # Create your models here.
 NAME_REGEX = '^[a-zA-Z ]*$'
 GENDER_CHOICE = (
@@ -14,8 +14,11 @@ GENDER_CHOICE = (
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=256, unique=True, blank=True)
-    account_no = models.PositiveIntegerField(unique=True, 
+    username = None
+    first_name = None
+    last_name = None
+
+    account_no = models.PositiveIntegerField(unique=True,
                                              validators=[MinValueValidator(10000000),
                                                          MaxValueValidator(99999999)
                                                          ]
@@ -44,12 +47,14 @@ class User(AbstractUser):
                                 )
     height_field = models.IntegerField(default=600, null=True)
     width_field = models.IntegerField(default=600, null=True)
+
+    objects = UserManager()
+
     USERNAME_FIELD = 'account_no' # use email to log in
-    REQUIRED_FIELDS = ['username', 'email'] # required when user is created
-
+    REQUIRED_FIELDS = [] # required when user is created
+    
     def __str__(self):
-        return str(self.account_no) 
+        return str(self.account_no)
 
-    # def get_absolute_url(self):
-    #     return reverse("user_profile", kwargs={"account_no": self.account_no})
+
     

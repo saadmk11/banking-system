@@ -1,0 +1,8 @@
+<h1>{{ title }}</h1>
+<hr>
+<form method="POST" action="" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <input type="submit" value='{{ title }}'>
+</form>
