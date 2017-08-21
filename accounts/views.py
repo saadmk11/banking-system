@@ -17,14 +17,16 @@ def register_view(request): # Creates a New Account & login New users
     else:
         title = "Register"
         form = UserRegistrationForm(request.POST or None, request.FILES or None)
+
         if form.is_valid():
             user = form.save(commit=False)
             password = form.cleaned_data.get("password1")
             user.set_password(password)
             user.save()
-            new_user = authenticate(account_no=user.account_no, password=password)
+            new_user = authenticate(email=user.email, password=password)
             login(request, new_user)
             return redirect("/")
+
         context = {"title":title, "form":form}
 
         return render(request, "accounts/form.html", context)
@@ -36,16 +38,20 @@ def login_view(request): # users will login with their Email & Password
     else:
         title = "Login"
         form = UserLoginForm(request.POST or None)
+        
         if form.is_valid():
             account_no = form.cleaned_data.get("account_no")
+            user_obj = User.objects.get(account_no=account_no)
             password = form.cleaned_data.get("password")
             # authenticates Email & Password
-            user = authenticate(account_no=account_no, password=password) 
+            user = authenticate(email=user_obj.email, password=password) 
             login(request, user)
+            print(request.user)
             return redirect("/")
+
         context = {"form":form,
                    "title":title
-        }
+                  }
 
         return render(request, "accounts/form.html", context)
 

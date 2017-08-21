@@ -3,7 +3,9 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
+
 from .models import User
+
 
 class UserRegistrationForm(UserCreationForm):
     birth_date = forms.DateField(widget=SelectDateWidget(years=range(1940, 2010)))
@@ -42,7 +44,8 @@ class UserLoginForm(forms.Form):
         password = self.cleaned_data.get("password")
 
         if account_no and password:
-            user = authenticate(account_no=account_no, password=password)
+            user_obj = User.objects.get(account_no=account_no)
+            user = authenticate(email=user_obj.email, password=password)
             if not user:
                 raise forms.ValidationError("Account Does Not Exist.")
             if not user.check_password(password):

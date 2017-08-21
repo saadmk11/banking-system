@@ -4,9 +4,10 @@ from django.dispatch import receiver
 
 from .models import User
 
+
 @receiver(pre_save, sender=User)
 def create_account_no(sender, instance, *args, **kwargs):
-    if instance.account_no == "None":
+    if not instance.account_no:
         largest = User.objects.all().aggregate(Max("account_no"))
         num = largest.get('account_no__max')
 
