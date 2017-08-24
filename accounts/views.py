@@ -15,7 +15,7 @@ def register_view(request): # Creates a New Account & login New users
     if request.user.is_authenticated:
         return redirect("home")
     else:
-        title = "Register"
+        title = "Create a Bank Account"
         form = UserRegistrationForm(request.POST or None, request.FILES or None)
 
         if form.is_valid():
@@ -25,6 +25,8 @@ def register_view(request): # Creates a New Account & login New users
             user.save()
             new_user = authenticate(email=user.email, password=password)
             login(request, new_user)
+            messages.success(request, 'Thank You For Creating A Bank Account {}. Your Account Number is {}, Please use this number to login'
+                            .format(new_user.full_name, new_user.account_no))
             return redirect("home")
 
         context = {"title":title, "form":form}
@@ -36,7 +38,7 @@ def login_view(request): # users will login with their Email & Password
     if request.user.is_authenticated:
         return redirect("home")
     else:
-        title = "Login"
+        title = "Load Account Details"
         form = UserLoginForm(request.POST or None)
         
         if form.is_valid():
@@ -46,7 +48,7 @@ def login_view(request): # users will login with their Email & Password
             # authenticates Email & Password
             user = authenticate(email=user_obj.email, password=password) 
             login(request, user)
-            print(request.user)
+            messages.success(request, 'Welcome, {}!' .format(user.full_name))
             return redirect("home")
 
         context = {"form":form,

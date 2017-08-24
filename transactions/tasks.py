@@ -12,7 +12,9 @@ def count():
     if users:
         for user in users:
             balance = user.balance
+            # calculates users interest
             amount = (balance * 10) / 100
             interest = Interest.objects.create(user=user, amount=amount)
+            # adds users interest to balance.
             user.balance += amount
             user.save()

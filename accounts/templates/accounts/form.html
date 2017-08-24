@@ -1,16 +1,14 @@
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+{% extends "core/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} {{ title }} | {{ block.super }}{% endblock title %}
 
-<h1>{{ title }}</h1>
-<hr>
+{% block content %}
+{% include "core/messages.html" %}
+<h2>{{ title }}</h2><hr>
 <form method="POST" action="" enctype='multipart/form-data'>
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <br>
-    <input type="submit" value='{{ title }}'>
+    <input class="btn btn-success" type="submit" value='Submit'>
 </form>
+{% endblock content %}

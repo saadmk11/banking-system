@@ -1,8 +1,17 @@
-<h1>{{ title }}</h1>
-<hr>
-<form method="POST" action="" enctype='multipart/form-data'>
+{% extends "core/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} {{ title }} | {{ block.super }}{% endblock title %}
+
+{% block content %}
+{% include "core/messages.html" %}
+<div class="alert alert-info" role="alert"><h4>Your Current Account Balance is {{request.user.balance}} $</h4></div>
+
+<h2>{{ title }}</h2><hr>
+<form method="POST" action="" >
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <br>
-    <input type="submit" value='{{ title }}'>
+    <input class="btn btn-primary" type="submit" value='{{ title }}'>
 </form>
+{% endblock content %}
+

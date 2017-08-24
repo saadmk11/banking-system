@@ -22,6 +22,8 @@ app.conf.beat_schedule = {
     # Executes 1st day of every Month.
     'every-month': {
         'task': 'count_interest',
+        # crontab can be changes to change Schedule
+        # http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html
         'schedule': crontab(0, 0, day_of_month='1'),
         
     },

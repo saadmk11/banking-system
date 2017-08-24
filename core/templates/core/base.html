@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>{% block title %} Banking System {% endblock title %}</title>
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href='{% static "css/bootstrap.min.css" %}'>
+        <link rel="stylesheet" href='{% static "css/bootstrap-theme.min.css" %}'>
+  </head>
+
+  <body>
+{% include "core/navbar.html" %}
+
+<div class="container" style="padding-top: 60px;">
+{% block content %}
+
+{% endblock content %}
+</div>
+{% include "core/footer.html" %}
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}" ></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}" ></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'home' %}" style="padding-left: 30px;">Banking System</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'home' %}">Home </a></li>
+        <li><a href="{% url 'transactions:deposit' %}">Deposit</a></li>
+        <li><a href="{% url 'transactions:withdrawal' %}">Withdraw</a></li>
+        <li><a href="{% url 'about' %}">About Us</a></li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Load Account Details</a></li>
+        <li><a href="{% url 'register' %}">Create an Account</a></li>
+        {% endif %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>

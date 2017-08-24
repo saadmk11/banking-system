@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_celery_beat',
+    'crispy_forms',
 
     'accounts',
     'core',
@@ -56,6 +58,8 @@ MIDDLEWARE = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_URL = "/login/"
 
 ROOT_URLCONF = 'bankingsystem.urls'
 
@@ -143,3 +147,10 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'alert-success',
+    messages.ERROR: 'alert-danger',
+}

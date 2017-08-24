@@ -7,11 +7,14 @@ from .models import User
 
 @receiver(pre_save, sender=User)
 def create_account_no(sender, instance, *args, **kwargs):
-    if not instance.account_no:
-        largest = User.objects.all().aggregate(Max("account_no"))
-        num = largest.get('account_no__max')
+    # checks if user has an account number
+    if not instance.account_no: 
+        # gets the largest account number
+        largest = User.objects.all().aggregate(Max("account_no"))['account_no__max'] 
 
-        if num != None:
-            instance.account_no = num + 1
+        if largest:
+            # creates new account number
+            instance.account_no = largest + 1 
         else:
-            instance.account_no = 10000000
+            # if there is no other user, sets users account number to 10000000.
+            instance.account_no = 10000000 

@@ -1,9 +1,11 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect
 
 from .forms import DepositForm, WithdrawalForm
 
-
+@login_required()
 def diposit_view(request):
     if not request.user.is_authenticated:
         raise Http404
@@ -14,9 +16,11 @@ def diposit_view(request):
         if form.is_valid():
             deposit = form.save(commit=False)
             deposit.user = request.user
-            deposit.user.balance += deposit.amount
+            # adds users deposit to balance.
+            deposit.user.balance += deposit.amount 
             deposit.user.save()
             deposit.save()
+            messages.success(request, 'You Have Deposited {} $.'.format(deposit.amount))
             return redirect("home")
 
         context = {
@@ -25,26 +29,31 @@ def diposit_view(request):
                   }
         return render(request, "transactions/form.html", context)
 
-
+@login_required()
 def withdrawal_view(request):
     if not request.user.is_authenticated:
         raise Http404
     else:
-        title = "Withdrawal"
+        title = "Withdraw"
         form = WithdrawalForm(request.POST or None)
 
         if form.is_valid():
+            
             withdrawal = form.save(commit=False)
             withdrawal.user = request.user
-
-            if withdrawal.user.balance >= withdrawal.amount:
-                withdrawal.user.balance -= withdrawal.amount
+            
+            # checks if user is tring Withdraw more than his balance.
+            if withdrawal.user.balance >= withdrawal.amount: 
+                # substracts users withdrawal from balance
+                withdrawal.user.balance -= withdrawal.amount 
                 withdrawal.user.save()
                 withdrawal.save()
+                messages.error(request, 'You Have Withdrawn {} $.'.format(withdrawal.amount))
                 return redirect("home")
 
             else:
-                raise Http404
+                messages.error(request, 'You Can Not Withdraw More Than You Balance.')
+
 
         context = {
                     "title": title,

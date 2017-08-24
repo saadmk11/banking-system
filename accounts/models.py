@@ -38,7 +38,7 @@ class User(AbstractUser):
     gender = models.CharField(max_length=6, choices=GENDER_CHOICE)
     birth_date = models.DateField(null=True, blank=True)
     email = models.EmailField(unique=True, blank=False)
-    contact_no = models.IntegerField(unique=True, null=True, blank=True)
+    contact_no = models.IntegerField(unique=True)
     Address = models.CharField(max_length=512)
     city = models.CharField(max_length=256)
     country = models.CharField(max_length=256)
