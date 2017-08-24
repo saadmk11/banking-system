@@ -11,8 +11,8 @@ from .managers import UserManager
 NAME_REGEX = '^[a-zA-Z ]*$'
 
 GENDER_CHOICE = (
-        ("M", "Male"),
-        ("F", "Female"),
+        ("Male", "Male"),
+        ("Female", "Female"),
     )
 
 
@@ -43,7 +43,7 @@ class User(AbstractUser):
     city = models.CharField(max_length=256)
     country = models.CharField(max_length=256)
     nationality = models.CharField(max_length=256)
-    Occupation = models.CharField(max_length=256)
+    occupation = models.CharField(max_length=256)
     balance = models.DecimalField(default=0, max_digits=12, decimal_places=2)
     picture = models.ImageField(null=True, 
                                 blank=True, 

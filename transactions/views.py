@@ -17,7 +17,7 @@ def diposit_view(request):
             deposit.user.balance += deposit.amount
             deposit.user.save()
             deposit.save()
-            return redirect("/")
+            return redirect("home")
 
         context = {
                     "title": title,
@@ -41,7 +41,7 @@ def withdrawal_view(request):
                 withdrawal.user.balance -= withdrawal.amount
                 withdrawal.user.save()
                 withdrawal.save()
-                return redirect("/")
+                return redirect("home")
 
             else:
                 raise Http404

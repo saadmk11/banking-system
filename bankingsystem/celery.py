@@ -19,8 +19,8 @@ app.autodiscover_tasks()
 
 
 app.conf.beat_schedule = {
-    # Executes every Monday morning at 7:30 a.m.
-    'every-minute': {
+    # Executes 1st day of every Month.
+    'every-month': {
         'task': 'count_interest',
         'schedule': crontab(0, 0, day_of_month='1'),
         

@@ -16,5 +16,3 @@ def count():
             interest = Interest.objects.create(user=user, amount=amount)
             user.balance += amount
             user.save()
-    else:
-        pass

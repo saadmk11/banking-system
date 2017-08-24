@@ -22,6 +22,8 @@ from accounts.views import (login_view,
                             register_view, 
                             logout_view)
 
+from core.views import home, about
+
 urlpatterns = [
     #admin
     url(r'^admin/', admin.site.urls),
@@ -29,6 +31,10 @@ urlpatterns = [
     url(r'^login/$', login_view, name='login'),
     url(r'^register/$', register_view, name='register'),
     url(r'^logout/$', logout_view, name='logout'),
+    #core
+    url(r'^$', home, name='home'),
+    url(r'^about/$', about, name='about'),
+    #transactions
     url(r'^', include('transactions.urls', namespace='transactions')),
 ]
 

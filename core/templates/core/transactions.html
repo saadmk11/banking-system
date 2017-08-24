@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+<!-- Latest compiled and minified CSS -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  </head>
+
+  <body>
+
+  <div class="page-header">
+  <h1 class="text-center"><b>Banking System</b><br><small>ABC Bank Ltd.</small></h1>
+</div>
+
+
+<div class="container">
+<div class="row">
+
+  <div class="col-xs-12 col-md-8 text-left">
+    <h4><b>Account Name: </b>{{ user.full_name }}</h4>
+    <h4><b>Date of Birth: </b>{{ user.birth_date }}</h4>
+    <h4><b>Gender: </b>{{ user.gender }}</h4>
+    <h4><b>Contact No: </b>{{ user.contact_no }}</h4>
+    <h4><b>Email Address: </b>{{ user.email }}</h4>
+    <h4><b>Address: </b>{{ user.Address }}</h4>
+    <h4><b>Location: </b>{{ user.city }}, {{ user.country }}</h4>
+    <h4><b>Occupation: </b>{{ user.occupation }}</h4>
+  </div>
+  <div class="col-xs-6 col-md-4 text-left">
+    <h4><b>Account Created: </b>{{ user.date_joined|date:'d-m-Y' }}</h4>
+    <h4><b>Account No: </b>{{ user.account_no }}</h4><br><br>
+    <div class="well">
+    <h4 class="card"><b>Account Balance: </b>{{ user.balance }} $</h4>
+    <a class="btn btn-success" href="{% url 'transactions:deposit' %}">Deposit</a>
+    <a class="btn btn-danger" href="{% url 'transactions:withdrawal' %}">Withdraw</a>
+    </div>
+  </div>
+
+</div>
+
+<hr>
+
+  <div class="page-header">
+  <h2 class="text-center"><b>Transaction Details</b></h2>
+</div>
+
+<h3>Deposit Details</h3>
+<table class="table table-hover table-bordered">
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>Date / Time</th>
+      <th>Deposit</th>
+      <th>Ammount ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    {% for obj in deposit %}
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{ obj.timestamp }}</td>
+      <td>Deposit</td>
+      <td>{{ obj.amount }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th class="text-right" scope="row" colspan="3">Total</th>
+
+      <td>{{ deposit_sum }}</td>
+    </tr>
+   
+  </tbody>
+</table>
+<hr>
+
+
+<h3>Withdrawal Details</h3>
+<table class="table table-hover table-bordered">
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>Date / Time</th>
+      <th>Withdrawal</th>
+      <th>Ammount ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    {% for obj in withdrawal %}
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{ obj.timestamp }}</td>
+      <td>Withdrawal</td>
+      <td>{{ obj.amount }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th class="text-right" scope="row" colspan="3">Total</th>
+
+      <td>{{ withdrawal_sum }}</td>
+    </tr>
+   
+  </tbody>
+</table>
+<hr>
+
+
+<h3>Interest Details</h3>
+<table class="table table-hover table-bordered">
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>Date / Time</th>
+      <th>Interest</th>
+      <th>Ammount ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    {% for obj in interest %}
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{ obj.timestamp }}</td>
+      <td>Interest</td>
+      <td>{{ obj.amount }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th class="text-right" scope="row" colspan="3">Total</th>
+
+      <td>{{ interest_sum }}</td>
+    </tr>
+   
+  </tbody>
+</table>
+<hr>
+
+</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>

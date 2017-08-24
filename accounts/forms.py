@@ -20,7 +20,7 @@ class UserRegistrationForm(UserCreationForm):
                   "city", 
                   "country", 
                   "nationality", 
-                  "Occupation", 
+                  "occupation", 
                   "picture",
                   "password1", 
                   "password2" )
@@ -44,13 +44,17 @@ class UserLoginForm(forms.Form):
         password = self.cleaned_data.get("password")
 
         if account_no and password:
-            user_obj = User.objects.get(account_no=account_no)
-            user = authenticate(email=user_obj.email, password=password)
-            if not user:
+            user_obj = User.objects.filter(account_no=account_no).first()
+            if user_obj:
+                user = authenticate(email=user_obj.email, password=password)
+                if not user:
+                    raise forms.ValidationError("Account Does Not Exist.")
+                if not user.check_password(password):
+                    raise forms.ValidationError("Password Does not Match.")
+                if not user.is_active:
+                    raise forms.ValidationError("Account is not Active.")
+            else:
                 raise forms.ValidationError("Account Does Not Exist.")
-            if not user.check_password(password):
-                raise forms.ValidationError("Password Does not Match.")
-            if not user.is_active:
-                raise forms.ValidationError("Account is not Active.")
+
 
         return super(UserLoginForm, self).clean(*args, **kwargs)
