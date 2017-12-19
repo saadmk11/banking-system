@@ -6,5 +6,3 @@ class AccountsConfig(AppConfig):
 
     def ready(self):
         import accounts.signals
-
-

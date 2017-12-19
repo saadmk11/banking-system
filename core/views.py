@@ -2,7 +2,8 @@ from django.db.models import Sum
 from django.shortcuts import render
 
 from transactions.models import Diposit, Withdrawal, Interest
-# Create your views here.
+
+
 def home(request):
     if not request.user.is_authenticated:
         return render(request, "core/home.html", {})

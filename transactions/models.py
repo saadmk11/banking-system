@@ -9,10 +9,13 @@ User = settings.AUTH_USER_MODEL
 
 class Diposit(models.Model):
     user = models.ForeignKey(User)
-    amount = models.DecimalField(decimal_places=2, 
-                                  max_digits=12, 
-                                  validators=[MinValueValidator(Decimal('10.00'))]
-                                  )
+    amount = models.DecimalField(
+      decimal_places=2,
+      max_digits=12,
+      validators=[
+          MinValueValidator(Decimal('10.00'))
+          ]
+      )
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -21,10 +24,13 @@ class Diposit(models.Model):
 
 class Withdrawal(models.Model):
     user = models.ForeignKey(User)
-    amount = models.DecimalField(decimal_places=2, 
-                                  max_digits=12, 
-                                  validators=[MinValueValidator(Decimal('10.00'))]
-                                  )
+    amount = models.DecimalField(
+      decimal_places=2,
+      max_digits=12,
+      validators=[
+          MinValueValidator(Decimal('10.00'))
+          ]
+      )
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -33,11 +39,14 @@ class Withdrawal(models.Model):
 
 class Interest(models.Model):
     user = models.ForeignKey(User)
-    amount = models.DecimalField(decimal_places=2, 
-                                  max_digits=12, 
-                                  validators=[MinValueValidator(Decimal('10.00'))]
-                                  )
-    timestamp = models.DateTimeField(auto_now_add=True) 
+    amount = models.DecimalField(
+      decimal_places=2,
+      max_digits=12,
+      validators=[
+          MinValueValidator(Decimal('10.00'))
+          ]
+      )
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.user)

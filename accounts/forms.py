@@ -8,22 +8,26 @@ from .models import User
 
 
 class UserRegistrationForm(UserCreationForm):
-    birth_date = forms.DateField(widget=SelectDateWidget(years=range(1940, 2010)))
+    birth_date = forms.DateField(
+      widget=SelectDateWidget(years=range(1940, 2010))
+      )
+
     class Meta:
         model = User
-        fields = ("full_name",
-                  "gender", 
-                  "birth_date", 
-                  "email", 
-                  "contact_no", 
-                  "Address", 
-                  "city", 
-                  "country", 
-                  "nationality", 
-                  "occupation", 
+        fields = ["full_name",
+                  "gender",
+                  "birth_date",
+                  "email",
+                  "contact_no",
+                  "Address",
+                  "city",
+                  "country",
+                  "nationality",
+                  "occupation",
                   "picture",
-                  "password1", 
-                  "password2" )
+                  "password1",
+                  "password2"
+                  ]
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
@@ -55,6 +59,5 @@ class UserLoginForm(forms.Form):
                     raise forms.ValidationError("Account is not Active.")
             else:
                 raise forms.ValidationError("Account Does Not Exist.")
-
 
         return super(UserLoginForm, self).clean(*args, **kwargs)
