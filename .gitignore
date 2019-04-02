@@ -3,7 +3,7 @@ local/
 bin/
 include/
 pip-selfcheck.json
-
+*migrations/
 db.sqlite3
 
 # Byte-compiled / optimized / DLL files

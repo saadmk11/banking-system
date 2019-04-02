@@ -1,8 +1,9 @@
 from django.db.models import Max
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.db.models.signals import post_save
 
-from .models import User
+from .models import User, Account
 
 
 @receiver(pre_save, sender=User)
@@ -20,3 +21,13 @@ def create_account_no(sender, instance, *args, **kwargs):
         else:
             # if there is no other user, sets users account number to 10000000.
             instance.account_no = 10000000
+
+#
+# post_save.connect(Account_post_save, sender = Account ,
+#                  instance = instance, create = create)
+#
+# def CUSTOMER_post_save(sender, instance, **kwargs):
+#         if create:
+#             cd = Account()
+#             cd.amount = ....
+#             cd.save()

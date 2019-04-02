@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Diposit, Withdrawal, Interest
+from .models import Deposit, Withdraw, Interest
 # Register your models here.
 
-admin.site.register(Diposit)
-admin.site.register(Withdrawal)
+admin.site.register(Deposit)
+admin.site.register(Withdraw)
 admin.site.register(Interest)

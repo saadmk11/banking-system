@@ -6,7 +6,7 @@
 {% include "core/messages.html" %}
 
     <div class="page-header">
-      <h1 class="text-center"><b>Banking System</b><br><small>ABC Bank Ltd.</small></h1>
+      <h1 class="text-center"><b>Online Banking</b><br><small>Baba Bank </small></h1>
     </div>
     
 <div class="row">
@@ -17,21 +17,24 @@
     <h4><b>Gender: </b>{{ user.gender }}</h4>
     <h4><b>Contact No: </b>{{ user.contact_no }}</h4>
     <h4><b>Email Address: </b>{{ user.email }}</h4>
-    <h4><b>Address: </b>{{ user.Address }}</h4>
-    <h4><b>Location: </b>{{ user.city }}, {{ user.country }}</h4>
-    <h4><b>Occupation: </b>{{ user.occupation }}</h4>
+    <h4><b>City: </b>{{ address.city }}</h4>
+    <h4><b>District: </b>{{ address.district }}, {{ user.country }}</h4>
+    <h4><b>Street: </b>{{ address.street }}</h4>
   </div>
   <div class="col-xs-6 col-md-4 text-left">
     <h4><b>Account Created: </b>{{ user.date_joined|date:'d-m-Y' }}</h4>
     <h4><b>Account No: </b>{{ user.account_no }}</h4><br><br>
     <div class="well">
-    <h4 class="card"><b>Account Balance: </b>{{ user.balance }} $</h4>
+    <h4 class="card"><b>Account Balance: </b>{{ account.balance }} $</h4>
     <a class="btn btn-success" href="{% url 'transactions:deposit' %}">Deposit</a>
-    <a class="btn btn-danger" href="{% url 'transactions:withdrawal' %}">Withdraw</a>
+    <a class="btn btn-danger" href="{% url 'transactions:withdraw' %}">Withdraw</a>
+    <a class="btn btn-primary" href="{% url 'transactions:transaction' %}">Transaction</a>
+
     </div>
   </div>
 
 </div>
+    <a class="btn btn-danger" href="{% url 'delete' %}" role="button">Delete Account </a>
 
 <hr>
 
@@ -69,7 +72,7 @@
 <hr>
 
 
-<h3>Withdrawal Details</h3>
+<h3>Withdraw Details</h3>
 <table class="table table-hover table-bordered">
   <thead>
     <tr>
@@ -81,17 +84,18 @@
   </thead>
   <tbody>
     <tr>
-    {% for obj in withdrawal %}
+    {% for obj in withdraw %}
       <th scope="row">{{forloop.counter}}</th>
       <td>{{ obj.timestamp }}</td>
       <td>Withdrawal</td>
       <td>{{ obj.amount }}</td>
+
     </tr>
     {% endfor %}
     <tr>
       <th class="text-right" scope="row" colspan="3">Total</th>
 
-      <td>{{ withdrawal_sum }}</td>
+      <td>{{ withdraw_sum }}</td>
     </tr>
    
   </tbody>
@@ -99,27 +103,34 @@
 <hr>
 
 
-<h3>Interest Details</h3>
+<h3>Transaction Details</h3>
 <table class="table table-hover table-bordered">
   <thead>
     <tr>
       <th>#</th>
       <th>Date / Time</th>
-      <th>Details</th>
+      <th>Your Account</th>
+      <th>Destionation Account</th>
+        <th>Interest</th>
+
       <th>Amount ($)</th>
+
+
     </tr>
   </thead>
   <tbody>
     <tr>
-    {% for obj in interest %}
+    {% for tran in transaction %}
       <th scope="row">{{forloop.counter}}</th>
-      <td>{{ obj.timestamp }}</td>
-      <td>Interest</td>
-      <td>{{ obj.amount }}</td>
+        <td>{{ tran.timestamp }}</td>
+      <td>{{ tran.source }}</td>
+      <td>{{ tran.dest}}</td>
+      <td>Transaction</td>
+      <td>{{ tran.amount }}</td>
     </tr>
     {% endfor %}
     <tr>
-      <th class="text-right" scope="row" colspan="3">Total</th>
+      <th class="text-right" scope="row" colspan="5">Total</th>
 
       <td>{{ interest_sum }}</td>
     </tr>

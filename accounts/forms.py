@@ -4,8 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 
-from .models import User
-#, Address
+from .models import User, Address
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -19,17 +18,9 @@ class UserRegistrationForm(UserCreationForm):
                   "gender",
                   "birth_date",
                   "email",
-                  "contact_no",
-                  "Address",
-                  "city",
-                  "country",
-                  "nationality",
-                  "occupation",
                   "password1",
-                  "password2",
+                  "password2"
                   ]
-
-
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
@@ -37,8 +28,8 @@ class UserRegistrationForm(UserCreationForm):
         user.first_name = self.cleaned_data['full_name']
         user.birth_date = self.cleaned_data['birth_date']
         if commit:
-            user.save()
 
+            user.save()
         return user
 
 
@@ -64,3 +55,19 @@ class UserLoginForm(forms.Form):
                 raise forms.ValidationError("Account Does Not Exist.")
 
         return super(UserLoginForm, self).clean(*args, **kwargs)
+
+
+class AddressFrom(forms.Form):
+    street = forms.CharField(100)
+    district = forms.CharField(25)
+    city = forms.CharField(25)
+
+
+    def save(self, commit=True):
+        address = super(AddressFrom, self).save(commit=False)
+        address.street = self.cleaned_data['street']
+        address.district = self.cleaned_data['district']
+        address.city = self.cleaned_data['city']
+        if commit:
+            address.save()
+        return address
