@@ -8,6 +8,7 @@ class UserManager(BaseUserManager):
         """
         Create and save a user with the given account_no and password.
         """
+
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)

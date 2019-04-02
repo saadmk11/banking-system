@@ -19,6 +19,13 @@ GENDER_CHOICE = (
     ("Female", "Female"),
     )
 
+'''
+class Address(models.Model):
+    address = models.CharField(200)
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
+'''
+
+
 
 class User(AbstractUser):
     username = None
@@ -52,6 +59,7 @@ class User(AbstractUser):
     Address = models.CharField(max_length=512)
     city = models.CharField(max_length=256)
     country = models.CharField(max_length=256)
+
     nationality = models.CharField(max_length=256)
     occupation = models.CharField(max_length=256)
     balance = models.DecimalField(
@@ -59,15 +67,7 @@ class User(AbstractUser):
         max_digits=12,
         decimal_places=2
         )
-    picture = models.ImageField(
-        null=True,
-        blank=True,
-        height_field="height_field",
-        width_field="width_field",
-        )
 
-    height_field = models.IntegerField(default=600, null=True)
-    width_field = models.IntegerField(default=600, null=True)
 
     objects = UserManager()
 

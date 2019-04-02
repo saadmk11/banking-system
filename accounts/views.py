@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import (authenticate,
                                  login,
-                                 logoutp
+                                 logout
                                  )
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
@@ -22,11 +22,11 @@ def register_view(request):  # Creates a New Account & login New users
             )
 
         if form.is_valid():
-            user = form.save(commit=False)
+            customer = form.save(commit=False)
             password = form.cleaned_data.get("password1")
-            user.set_password(password)
-            user.save()
-            new_user = authenticate(email=user.email, password=password)
+            customer.set_password(password)
+            customer.save()
+            new_user = authenticate(email=customer.email, password=password)
             login(request, new_user)
             messages.success(
                 request,

@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 
 from .models import User
+#, Address
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -24,10 +25,11 @@ class UserRegistrationForm(UserCreationForm):
                   "country",
                   "nationality",
                   "occupation",
-                  "picture",
                   "password1",
-                  "password2"
+                  "password2",
                   ]
+
+
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
@@ -36,6 +38,7 @@ class UserRegistrationForm(UserCreationForm):
         user.birth_date = self.cleaned_data['birth_date']
         if commit:
             user.save()
+
         return user
 
 
