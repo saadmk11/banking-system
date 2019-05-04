@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import (
     MinValueValidator,
     MaxValueValidator,
-    RegexValidator
+    RegexValidator,
 )
 from django.db import models
 from django.urls import reverse
@@ -97,6 +97,7 @@ class AccountDetails(models.Model):
         blank=True,
         upload_to='account_pictures/',
     )
+
     def __str__(self):
         return str(self.account_no)
 
@@ -113,4 +114,4 @@ class UserAddress(models.Model):
     country = models.CharField(max_length=256)
 
     def __str__(self):
-        return str(self.user.email)
+        return self.user.email

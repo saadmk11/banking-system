@@ -87,7 +87,7 @@ def login_view(request):
         return render(request, "accounts/form.html", context)
 
 
-def logout_view(request):  # logs out the logged in users
+def logout_view(request):
     if not request.user.is_authenticated:
         return redirect("accounts:login")
     else:
