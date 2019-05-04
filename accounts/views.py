@@ -1,33 +1,52 @@
 from django.contrib import messages
-from django.contrib.auth import (authenticate,
-                                 login,
-                                 logout
-                                 )
+from django.contrib.auth import (
+    authenticate,
+    login,
+    logout,
+)
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import UserLoginForm, UserRegistrationForm
+from .forms import (
+    UserLoginForm, UserRegistrationForm,
+    AccountDetailsForm, UserAddressForm,
+)
 from .models import User
 
 
-def register_view(request):  # Creates a New Account & login New users
+def register_view(request):
     if request.user.is_authenticated:
         return redirect("home")
     else:
-        title = "Create a Bank Account"
-        form = UserRegistrationForm(
+        user_form = UserRegistrationForm(
+            request.POST or None,
+        )
+        account_form = AccountDetailsForm(
             request.POST or None,
             request.FILES or None
-            )
+        )
+        address_form = UserAddressForm(
+            request.POST or None
+        )
 
-        if form.is_valid():
-            user = form.save(commit=False)
-            password = form.cleaned_data.get("password1")
+        if user_form.is_valid() and account_form.is_valid() and address_form.is_valid():
+            user = user_form.save(commit=False)
+            account_details = account_form.save(commit=False)
+            address = address_form.save(commit=False)
+            password = user_form.cleaned_data.get("password1")
             user.set_password(password)
             user.save()
-            new_user = authenticate(email=user.email, password=password)
-            login(request, new_user)
+            account_details.user = user
+            account_details.save()
+            address.user = user
+            address.save()
+            new_user = authenticate(
+                account_no=user.account_no, password=password
+            )
+            login(
+                request, new_user, backend='accounts.backends.AccountNoBackend'
+            )
             messages.success(
                 request,
                 '''Thank You For Creating A Bank Account {}.
@@ -36,30 +55,33 @@ def register_view(request):  # Creates a New Account & login New users
 
             return redirect("home")
 
-        context = {"title": title, "form": form}
+        context = {
+            "title": "Create a Bank Account",
+            "user_form": user_form,
+            "account_form": account_form,
+            "address_form": address_form,
+        }
 
-        return render(request, "accounts/form.html", context)
+        return render(request, "accounts/register_form.html", context)
 
 
-def login_view(request):  # users will login with their Email & Password
+def login_view(request):
     if request.user.is_authenticated:
         return redirect("home")
     else:
-        title = "Load Account Details"
         form = UserLoginForm(request.POST or None)
 
         if form.is_valid():
             account_no = form.cleaned_data.get("account_no")
-            user_obj = User.objects.filter(account_no=account_no).first()
             password = form.cleaned_data.get("password")
-            # authenticates Email & Password
-            user = authenticate(email=user_obj.email, password=password)
-            login(request, user)
+            # authenticate with Account No & Password
+            user = authenticate(account_no=account_no, password=password)
+            login(request, user, backend='accounts.backends.AccountNoBackend')
             messages.success(request, 'Welcome, {}!' .format(user.full_name))
             return redirect("home")
 
         context = {"form": form,
-                   "title": title
+                   "title": "Load Account Details",
                    }
 
         return render(request, "accounts/form.html", context)
@@ -67,7 +89,7 @@ def login_view(request):  # users will login with their Email & Password
 
 def logout_view(request):  # logs out the logged in users
     if not request.user.is_authenticated:
-        return redirect("login")
+        return redirect("accounts:login")
     else:
         logout(request)
         return redirect("home")

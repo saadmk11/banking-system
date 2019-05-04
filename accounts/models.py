@@ -47,6 +47,10 @@ class User(AbstractUser):
         return None
 
     @property
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
+    @property
     def balance(self):
         if hasattr(self, 'account'):
             return self.account.balance

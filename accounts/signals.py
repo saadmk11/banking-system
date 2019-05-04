@@ -2,15 +2,15 @@ from django.db.models import Max
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
-from .models import User
+from .models import User, AccountDetails
 
 
-@receiver(pre_save, sender=User)
+@receiver(pre_save, sender=AccountDetails)
 def create_account_no(sender, instance, *args, **kwargs):
     # checks if user has an account number and user is not staff or superuser
-    if not instance.account_no and not (instance.is_staff or instance.is_superuser):
+    if not instance.account_no and not (instance.user.is_staff or instance.user.is_superuser):
         # gets the largest account number
-        largest = User.objects.all().aggregate(
+        largest = AccountDetails.objects.all().aggregate(
             Max("account_no")
             )['account_no__max']
 

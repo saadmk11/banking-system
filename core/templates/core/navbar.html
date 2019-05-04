@@ -21,10 +21,10 @@
       
       <ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
         {% if request.user.is_authenticated %}
-        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
         {% else %}
-        <li><a href="{% url 'login' %}">Load Account Details</a></li>
-        <li><a href="{% url 'register' %}">Create an Account</a></li>
+        <li><a href="{% url 'accounts:login' %}">Load Account Details</a></li>
+        <li><a href="{% url 'accounts:register' %}">Create an Account</a></li>
         {% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->
