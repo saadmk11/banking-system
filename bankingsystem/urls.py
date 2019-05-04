@@ -18,20 +18,14 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from accounts.views import (login_view,
-                            register_view,
-                            logout_view
-                            )
-
 from core.views import home, about
+
 
 urlpatterns = [
     # admin
     url(r'^admin/', admin.site.urls),
     # Accounts
-    url(r'^login/$', login_view, name='login'),
-    url(r'^register/$', register_view, name='register'),
-    url(r'^logout/$', logout_view, name='logout'),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     # core
     url(r'^$', home, name='home'),
     url(r'^about/$', about, name='about'),

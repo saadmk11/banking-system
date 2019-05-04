@@ -7,8 +7,8 @@ from .models import User
 
 @receiver(pre_save, sender=User)
 def create_account_no(sender, instance, *args, **kwargs):
-    # checks if user has an account number
-    if not instance.account_no:
+    # checks if user has an account number and user is not staff or superuser
+    if not instance.account_no and not (instance.is_staff or instance.is_superuser):
         # gets the largest account number
         largest = User.objects.all().aggregate(
             Max("account_no")
