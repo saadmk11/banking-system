@@ -9,12 +9,12 @@ from .models import Interest
 def count():
     users = User.objects.all()
 
-    if users:
+    if users.exists():
         for user in users:
             balance = user.balance
             # calculates users interest
             amount = (balance * 10) / 100
-            interest = Interest.objects.create(user=user, amount=amount)
+            Interest.objects.create(user=user, amount=amount)
             # adds users interest to balance.
-            user.balance += amount
-            user.save()
+            user.account.balance += amount
+            user.account.save()
