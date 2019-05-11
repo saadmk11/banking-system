@@ -8,7 +8,6 @@ from .models import Interest
 @task(name="count_interest")
 def count():
     users = User.objects.filter(account__balance__isnull=False)
-    print(users)
 
     if users.exists():
         for user in users:

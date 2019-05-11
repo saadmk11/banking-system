@@ -7,6 +7,8 @@ pip-selfcheck.json
 db.sqlite3
 .idea/
 media/
+celerybeat-schedule.db
+celerybeat.pid
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
