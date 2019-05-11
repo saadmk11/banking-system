@@ -25,9 +25,8 @@ app.conf.beat_schedule = {
         # crontab can be changes to change Schedule
         # http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html
         'schedule': crontab(0, 0, day_of_month='1'),
-
-        },
-    }
+    },
+}
 
 
 @app.task(bind=True)

@@ -1,32 +1,31 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{% url 'home' %}" style="padding-left: 30px;">Banking System</a>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'home' %}">Banking System</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="{% url 'home' %}">Home </a></li>
-        <li><a href="{% url 'transactions:deposit' %}">Deposit</a></li>
-        <li><a href="{% url 'transactions:withdrawal' %}">Withdraw</a></li>
-        <li><a href="{% url 'about' %}">About Us</a></li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'transactions:deposit' %}">Deposit</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'transactions:withdrawal' %}">Withdraw</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'about' %}">About Us</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
         {% if request.user.is_authenticated %}
-        <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+            <a href="{% url 'accounts:logout' %}" class="btn btn-danger btn-sm" type="button">Logout</a>
         {% else %}
-        <li><a href="{% url 'accounts:login' %}">Load Account Details</a></li>
-        <li><a href="{% url 'accounts:register' %}">Create an Account</a></li>
+            <a href="{% url 'accounts:login' %}" class="btn btn-success btn-sm" type="button">Load Account Details</a> |
+            <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-sm" type="button">Create an Account</a>
         {% endif %}
-      </ul>
-    </div><!-- /.navbar-collapse -->
+    </form>
   </div>
 </nav>

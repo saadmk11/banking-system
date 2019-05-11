@@ -6,6 +6,7 @@ pip-selfcheck.json
 
 db.sqlite3
 .idea/
+media/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

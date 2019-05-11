@@ -59,7 +59,7 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "/accounts/login/"
 
 ROOT_URLCONF = 'bankingsystem.urls'
 
@@ -135,10 +135,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static-root")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media-root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
@@ -148,7 +148,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',
