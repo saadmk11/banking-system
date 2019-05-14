@@ -84,9 +84,9 @@ python manage.py createsuperuser
 Run Celery
 (Different Terminal Window with Virtual Environment Activated)
 ```bash
-celery -A smartlabs worker -l info
+celery -A bankingsystem worker -l info
 
-celery -A smartlabs beat -l info
+celery -A bankingsystem beat -l info
 ```
 
 ## Images:
