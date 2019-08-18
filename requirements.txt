@@ -1,7 +1,7 @@
 amqp==2.2.1
 billiard==3.5.0.3
 celery==4.1.0
-Django==1.11.20
+Django==1.11.23
 django-celery-beat==1.0.1
 django-crispy-forms==1.6.1
 kombu==4.1.0
