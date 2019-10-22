@@ -6,7 +6,7 @@ django-celery-beat==1.0.1
 django-crispy-forms==1.6.1
 kombu==4.1.0
 olefile==0.44
-Pillow==4.2.1
+Pillow==6.2.0
 pytz==2017.2
 redis==2.10.6
 vine==1.1.4
