@@ -1,12 +1,1 @@
-amqp==2.2.1
-billiard==3.5.0.3
-celery==4.1.0
-Django==1.11.29
-django-celery-beat==1.0.1
-django-crispy-forms==1.6.1
-kombu==4.1.0
-olefile==0.44
-Pillow==6.2.0
-pytz==2017.2
-redis==2.10.6
-vine==1.1.4
+django==3.1

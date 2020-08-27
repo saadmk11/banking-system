@@ -4,11 +4,19 @@ bin/
 include/
 pip-selfcheck.json
 
-db.sqlite3
+course_import.py
 .idea/
+dist/
+.vscode/
+db.json
+htmlcov/
 media/
-celerybeat-schedule.db
+db.sqlite3
+staticfiles/
+.env
+.coverage
 celerybeat.pid
+celerybeat-schedule
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -23,7 +31,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
