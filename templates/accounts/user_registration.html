@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    {{ registration_form }}
+    {{ address_form }}
+    <button type="submit">Submit</button>
+</form>

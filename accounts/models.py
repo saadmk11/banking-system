@@ -7,6 +7,7 @@ from django.core.validators import (
 )
 from django.db import models
 
+from .constants import GENDER_CHOICE
 from .managers import UserManager
 
 
@@ -50,6 +51,10 @@ class BankAccountType(models.Model):
         return self.name
 
     def calculate_interest(self, principal):
+        """Calculate interest for each account type.
+
+        This uses a basic interest calculation formula
+        """
         p = principal
         r = self.annual_interest_rate
         n = Decimal(self.interest_calculation_per_year)
@@ -58,10 +63,6 @@ class BankAccountType(models.Model):
 
 
 class UserBankAccount(models.Model):
-    GENDER_CHOICE = (
-        ("M", "Male"),
-        ("F", "Female"),
-    )
     user = models.OneToOneField(
         User,
         related_name='account',
