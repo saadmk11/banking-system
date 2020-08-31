@@ -1,15 +1,12 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 
 from .constants import TRANSACTION_TYPE_CHOICES
-
-
-User = get_user_model()
+from accounts.models import UserBankAccount
 
 
 class Transaction(models.Model):
-    user = models.ForeignKey(
-        User,
+    account = models.ForeignKey(
+        UserBankAccount,
         related_name='transactions',
         on_delete=models.CASCADE,
     )
@@ -23,4 +20,4 @@ class Transaction(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.account.account_no)

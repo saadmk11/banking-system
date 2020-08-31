@@ -1,6 +1,9 @@
+from dateutil.relativedelta import relativedelta
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import CreateView
 
 from transactions.constants import DEPOSIT, WITHDRAWAL
@@ -18,7 +21,7 @@ class TransactionMixin(LoginRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
-            'user': self.request.user
+            'account': self.request.user.account
         })
         return kwargs
 
@@ -41,9 +44,28 @@ class DepositMoneyView(TransactionMixin):
 
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
+        account = self.request.user.account
 
-        self.request.user.account.balance += amount
-        self.request.user.account.save()
+        if not account.initial_deposit_date:
+            now = timezone.now()
+            next_interest_month = int(
+                12 / account.account_type.interest_calculation_per_year
+            )
+            account.initial_deposit_date = now
+            account.interest_start_date = (
+                now + relativedelta(
+                    months=+next_interest_month
+                )
+            )
+
+        account.balance += amount
+        account.save(
+            update_fields=[
+                'initial_deposit_date',
+                'balance',
+                'interest_start_date'
+            ]
+        )
 
         messages.success(
             self.request,
@@ -65,7 +87,7 @@ class WithdrawMoneyView(TransactionMixin):
         amount = form.cleaned_data.get('amount')
 
         self.request.user.account.balance -= form.cleaned_data.get('amount')
-        self.request.user.account.save()
+        self.request.user.account.save(update_fields=['balance'])
 
         messages.success(
             self.request,

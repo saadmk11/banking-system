@@ -14,14 +14,14 @@ class TransactionForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
+        self.account = kwargs.pop('account')
         super().__init__(*args, **kwargs)
 
         self.fields['transaction_type'].disabled = True
         self.fields['transaction_type'].widget = forms.HiddenInput()
 
     def save(self, commit=True):
-        self.instance.user = self.user
+        self.instance.account = self.account
         return super().save()
 
 
@@ -42,7 +42,7 @@ class DepositForm(TransactionForm):
 class WithdrawForm(TransactionForm):
 
     def clean_amount(self):
-        account = self.user.account
+        account = self.account
         min_withdraw_amount = settings.MINIMUM_WITHDRAWAL_AMOUNT
         max_withdraw_amount = (
             account.account_type.maximum_withdrawal_amount
