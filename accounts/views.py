@@ -1,95 +1,68 @@
 from django.contrib import messages
-from django.contrib.auth import (
-    authenticate,
-    login,
-    logout,
-)
-from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.views import LoginView
+from django.shortcuts import HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, RedirectView
 
-from .forms import (
-    UserLoginForm, UserRegistrationForm,
-    AccountDetailsForm, UserAddressForm,
-)
-from .models import User
+from .forms import UserRegistrationForm, UserAddressForm
 
 
-def register_view(request):
-    if request.user.is_authenticated:
-        return redirect("home")
-    else:
-        user_form = UserRegistrationForm(
-            request.POST or None,
-        )
-        account_form = AccountDetailsForm(
-            request.POST or None,
-            request.FILES or None
-        )
-        address_form = UserAddressForm(
-            request.POST or None
-        )
+User = get_user_model()
 
-        if user_form.is_valid() and account_form.is_valid() and address_form.is_valid():
-            user = user_form.save(commit=False)
-            account_details = account_form.save(commit=False)
+
+class UserRegistrationView(TemplateView):
+    model = User
+    form_class = UserRegistrationForm
+    template_name = 'accounts/user_registration.html'
+
+    def post(self, request, *args, **kwargs):
+        registration_form = UserRegistrationForm(self.request.POST)
+        address_form = UserAddressForm(self.request.POST)
+
+        if registration_form.is_valid() and address_form.is_valid():
+            user = registration_form.save()
             address = address_form.save(commit=False)
-            password = user_form.cleaned_data.get("password1")
-            user.set_password(password)
-            user.save()
-            account_details.user = user
-            account_details.save()
             address.user = user
             address.save()
-            new_user = authenticate(
-                account_no=user.account_no, password=password
-            )
-            login(
-                request, new_user, backend='accounts.backends.AccountNoBackend'
-            )
+
+            login(self.request, user)
             messages.success(
-                request,
-                '''Thank You For Creating A Bank Account {}.
-                Your Account Number is {}, Please use this number to login
-                '''.format(new_user.full_name, new_user.account_no))
+                self.request,
+                (
+                    f'Thank You For Creating A Bank Account. '
+                    f'Your Account Number is {user.account.account_no}. '
+                )
+            )
+            return HttpResponseRedirect(
+                reverse_lazy('transactions:deposit_money')
+            )
 
-            return redirect("home")
+        return self.render_to_response(
+            self.get_context_data(
+                registration_form=registration_form,
+                address_form=address_form
+            )
+        )
 
-        context = {
-            "title": "Create a Bank Account",
-            "user_form": user_form,
-            "account_form": account_form,
-            "address_form": address_form,
-        }
+    def get_context_data(self, **kwargs):
+        if 'registration_form' not in kwargs:
+            kwargs['registration_form'] = UserRegistrationForm()
+        if 'address_form' not in kwargs:
+            kwargs['address_form'] = UserAddressForm()
 
-        return render(request, "accounts/register_form.html", context)
-
-
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect("home")
-    else:
-        form = UserLoginForm(request.POST or None)
-
-        if form.is_valid():
-            account_no = form.cleaned_data.get("account_no")
-            password = form.cleaned_data.get("password")
-            # authenticate with Account No & Password
-            user = authenticate(account_no=account_no, password=password)
-            login(request, user, backend='accounts.backends.AccountNoBackend')
-            messages.success(request, 'Welcome, {}!' .format(user.full_name))
-            return redirect("home")
-
-        context = {"form": form,
-                   "title": "Load Account Details",
-                   }
-
-        return render(request, "accounts/form.html", context)
+        return super().get_context_data(**kwargs)
 
 
-def logout_view(request):
-    if not request.user.is_authenticated:
-        return redirect("accounts:login")
-    else:
-        logout(request)
-        return redirect("home")
+class UserLoginView(LoginView):
+    template_name='accounts/user_login.html'
+    redirect_authenticated_user = True
+
+
+class LogoutView(RedirectView):
+    pattern_name = 'home'
+
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            logout(self.request)
+        return super().get_redirect_url(*args, **kwargs)

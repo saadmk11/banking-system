@@ -1,33 +1,37 @@
-# Online Banking System
+# Online Banking System V2.0
 
 This is a Online Banking Concept created using Django Web Framework.
 
 ## Features
 
 * Create Bank Account.
-* Load account Details Using Account Number & password.
-* Deposit & Withdraw Money.
-* Transaction Detail Page.
-* Count Monthly Interest Using Celery.
+* Deposit & Withdraw Money
+* Bank Account Type Support
+* Interest calculation depending on the Account type
+* Transaction report with a date range filter and balance after every transaction
+* Count Monthly Interest Using Celery
+* More efficient and accurate interest calculation and balance update
+* Ability to add Minimum and Maximum Transaction amount restriction
+* Modern UI with Tailwind CSS
+
 
 ## Prerequisites
 
 Be sure you have the following installed on your development machine:
 
-+ Python >= 3.6.3
++ Python >= 3.7
 + Redis Server
-+ Git 
++ Git
 + pip
 + Virtualenv (virtualenvwrapper is recommended)
 
 ## Requirements
 
-+ celery==4.1.0
-+ Django==1.11.20
-+ django-celery-beat==1.0.1
-+ django-crispy-forms==1.6.1
-+ Pillow==4.2.1
-+ redis==2.10.6
++ celery==4.4.7
++ Django==3.1
++ django-celery-beat==2.0.0
++ python-dateutil==2.8.1
++ redis==3.5.3
 
 ## Install Redis Server
 
@@ -84,14 +88,12 @@ python manage.py createsuperuser
 Run Celery
 (Different Terminal Window with Virtual Environment Activated)
 ```bash
-celery -A bankingsystem worker -l info
+celery -A banking_system worker -l info
 
-celery -A bankingsystem beat -l info
+celery -A banking_system beat -l info
 ```
 
 ## Images:
-![alt text](https://i.imgur.com/QZwaEHX.png)
+![alt text](https://i.imgur.com/FvgmEJL.png)
 #
-![alt text](https://i.imgur.com/HTcqWcw.png)
-#
-![alt text](https://i.imgur.com/HHsmJVD.png)
+![alt text](https://i.imgur.com/aWzj44Y.png)

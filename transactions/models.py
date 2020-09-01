@@ -1,61 +1,30 @@
-from decimal import Decimal
-from django.conf import settings
-from django.core.validators import MinValueValidator
 from django.db import models
 
+from .constants import TRANSACTION_TYPE_CHOICES
+from accounts.models import UserBankAccount
 
-User = settings.AUTH_USER_MODEL
 
-
-class Diposit(models.Model):
-    user = models.ForeignKey(
-        User,
-        related_name='deposits',
+class Transaction(models.Model):
+    account = models.ForeignKey(
+        UserBankAccount,
+        related_name='transactions',
         on_delete=models.CASCADE,
     )
     amount = models.DecimalField(
         decimal_places=2,
-        max_digits=12,
-        validators=[
-            MinValueValidator(Decimal('10.00'))
-        ]
+        max_digits=12
     )
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return str(self.user)
-
-
-class Withdrawal(models.Model):
-    user = models.ForeignKey(
-        User,
-        related_name='withdrawals',
-        on_delete=models.CASCADE,
-    )
-    amount = models.DecimalField(
+    balance_after_transaction = models.DecimalField(
         decimal_places=2,
-        max_digits=12,
-        validators=[
-            MinValueValidator(Decimal('10.00'))
-        ]
+        max_digits=12
+    )
+    transaction_type = models.PositiveSmallIntegerField(
+        choices=TRANSACTION_TYPE_CHOICES
     )
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.account.account_no)
 
-
-class Interest(models.Model):
-    user = models.ForeignKey(
-        User,
-        related_name='interests',
-        on_delete=models.CASCADE,
-    )
-    amount = models.DecimalField(
-        decimal_places=2,
-        max_digits=12,
-    )
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return str(self.user)
+    class Meta:
+        ordering = ['timestamp']

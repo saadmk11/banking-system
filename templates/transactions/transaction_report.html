@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}Transaction Report{% endblock %}
+
+{% block head_extra %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{% endblock %}
+
+{% block content %}
+    <h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Transaction Report</h1>
+    <hr />
+    <form method="get">
+        <div class="mt-10 h-10 pl-3 pr-2 bg-white border rounded-md border-gray-500 flex justify-between items-center relative">
+            <input type="search" name="daterange" id="search" placeholder="Filter using date range" value="{{ request.GET.daterange }}" class="appearance-none w-full outline-none focus:outline-none active:outline-none" />
+            <button type="submit" class="ml-1 outline-none focus:outline-none active:outline-none">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </button>
+        </div>
+        {% if form.daterange.errors %}
+            {% for error in form.daterange.errors %}
+                <p class="text-red-600 text-sm italic">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    </form>
+    <table class="table-auto mx-auto w-full mt-8">
+        <thead class="bg-gray-800 text-white">
+        <tr class="uppercase font-semibold text-sm">
+            <th class="px-4 py-2">Transaction Type</th>
+            <th class="px-4 py-2">Date</th>
+            <th class="px-4 py-2">Amount</th>
+            <th class="px-4 py-2">Balance After Transaction</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in object_list %}
+        <tr class="{% cycle 'bg-gray-300' 'bg-white-100' %}">
+            <td class="border px-4 py-2 text-center">{{ transaction.get_transaction_type_display }}</td>
+            <td class="border px-4 py-2 text-center">{{ transaction.timestamp }}</td>
+            <td class="border px-4 py-2 text-center">$ {{ transaction.amount }}</td>
+            <td class="border px-4 py-2 text-center">$ {{ transaction.balance_after_transaction }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="bg-gray-600 text-white">
+            <th class="px-4 py-2 text-right" colspan="3">Final Balance</th>
+            <th class="px-4 py-2 text-center">$ {{ account.balance }}</th>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block footer_extra %}
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: "Clear",
+                },
+            });
+
+            $('input[name="daterange"]').on("apply.daterangepicker", function (ev, picker) {
+                $(this).val(picker.startDate.format("YYYY-MM-DD") + " - " + picker.endDate.format("YYYY-MM-DD"));
+            });
+
+            $('input[name="daterange"]').on("cancel.daterangepicker", function (ev, picker) {
+                $(this).val("");
+            });
+        });
+    </script>
+{% endblock %}
