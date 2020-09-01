@@ -9,7 +9,7 @@ This is a Online Banking Concept created using Django Web Framework.
 * Bank Account Type Support
 * Interest calculation depending on the Account type
 * Transaction report with a date range filter and balance after every transaction
-* Count Monthly Interest Using Celery
+* Calculate Monthly Interest Using Celery Scheduled tasks
 * More efficient and accurate interest calculation and balance update
 * Ability to add Minimum and Maximum Transaction amount restriction
 * Modern UI with Tailwind CSS
