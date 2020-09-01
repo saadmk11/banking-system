@@ -1,6 +1,5 @@
 {% load static %}
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -18,6 +17,7 @@
         {% block body %}
             {% include 'core/navbar.html' %}
             <div class="lg:container lg:mx-auto">
+                {% include 'core/messages.html' %}
                 {% block content %}
                 <!-- Add content here -->
                 {% endblock %}

@@ -1,14 +1,13 @@
 from django.urls import path
 
-from django.contrib.auth.views import LoginView
+from .views import UserRegistrationView, LogoutView, UserLoginView
 
-from .views import UserRegistrationView, LogoutView
 
 app_name = 'accounts'
 
 urlpatterns = [
     path(
-        "login/", LoginView.as_view(template_name='accounts/user_login.html'),
+        "login/", UserLoginView.as_view(),
         name="user_login"
     ),
     path(

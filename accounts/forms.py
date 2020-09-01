@@ -18,6 +18,19 @@ class UserAddressForm(forms.ModelForm):
             'country'
         ]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 rounded '
+                    'py-3 px-4 leading-tight focus:outline-none '
+                    'focus:bg-white focus:border-gray-500'
+                )
+            })
+
 
 class UserRegistrationForm(UserCreationForm):
     account_type = forms.ModelChoiceField(
@@ -35,6 +48,20 @@ class UserRegistrationForm(UserCreationForm):
             'password1',
             'password2',
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 '
+                    'rounded py-3 px-4 leading-tight '
+                    'focus:outline-none focus:bg-white '
+                    'focus:border-gray-500'
+                )
+            })
 
     @transaction.atomic
     def save(self, commit=True):

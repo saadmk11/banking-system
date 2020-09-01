@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.views import LoginView
 from django.shortcuts import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 
 from .forms import UserRegistrationForm, UserAddressForm
@@ -32,8 +34,9 @@ class UserRegistrationView(TemplateView):
                     f'Your Account Number is {user.account.account_no}. '
                 )
             )
-            # TODO: Update URL
-            return HttpResponseRedirect('home')
+            return HttpResponseRedirect(
+                reverse_lazy('transactions:deposit_money')
+            )
 
         return self.render_to_response(
             self.get_context_data(
@@ -51,8 +54,12 @@ class UserRegistrationView(TemplateView):
         return super().get_context_data(**kwargs)
 
 
+class UserLoginView(LoginView):
+    template_name='accounts/user_login.html'
+    redirect_authenticated_user = True
+
+
 class LogoutView(RedirectView):
-    # TODO: Update URL
     pattern_name = 'home'
 
     def get_redirect_url(self, *args, **kwargs):

@@ -3,7 +3,7 @@
 {% block head_title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1 class="font-mono font-bold text-3xl text-center pb-5 pt-20">{{ title }}</h1>
+<h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">{{ title }}</h1>
 <hr />
 <div class="w-full mt-5">
     <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -13,7 +13,7 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
                 Amount
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="amount" id="amount" type="number" required placeholder="Amount">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight border rounded-md border-gray-500 focus:outline-none focus:shadow-outline" name="amount" id="amount" type="number" required placeholder="Amount">
         </div>
         {% if form.amount.errors %}
             {% for error in form.amount.errors %}

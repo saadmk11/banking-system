@@ -2,7 +2,6 @@ from dateutil.relativedelta import relativedelta
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, ListView
@@ -107,7 +106,7 @@ class DepositMoneyView(TransactionCreateMixin):
 
         messages.success(
             self.request,
-            f'{amount} $ deposited to your account successfully'
+            f'{amount}$ was deposited to your account successfully'
         )
 
         return super().form_valid(form)
@@ -129,7 +128,7 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
         messages.success(
             self.request,
-            f'{amount} $ withdrawn from your account successfully'
+            f'Successfully withdrawn {amount}$ from your account'
         )
 
         return super().form_valid(form)
