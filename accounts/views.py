@@ -16,6 +16,13 @@ class UserRegistrationView(TemplateView):
     form_class = UserRegistrationForm
     template_name = 'accounts/user_registration.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return HttpResponseRedirect(
+                reverse_lazy('transactions:transaction_report')
+            )
+        return super().dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         registration_form = UserRegistrationForm(self.request.POST)
         address_form = UserAddressForm(self.request.POST)
