@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 from django.conf import settings
 
@@ -22,6 +24,7 @@ class TransactionForm(forms.ModelForm):
 
     def save(self, commit=True):
         self.instance.account = self.account
+        self.instance.balance_after_transaction = self.account.balance
         return super().save()
 
 
@@ -64,7 +67,27 @@ class WithdrawForm(TransactionForm):
         if amount > balance:
             raise forms.ValidationError(
                 f'You have {balance} $ in your account. '
-                'You can not withdraw more than that'
+                'You can not withdraw more than your account balance'
             )
 
         return amount
+
+
+class TransactionDateRangeForm(forms.Form):
+    daterange = forms.CharField(required=False)
+
+    def clean_daterange(self):
+        daterange = self.cleaned_data.get("daterange")
+        print(daterange)
+
+        try:
+            daterange = daterange.split(' - ')
+            print(daterange)
+            if len(daterange) == 2:
+                for date in daterange:
+                    datetime.datetime.strptime(date, '%Y-%m-%d')
+                return daterange
+            else:
+                raise forms.ValidationError("Please select a date range.")
+        except (ValueError, AttributeError):
+            raise forms.ValidationError("Invalid date range")

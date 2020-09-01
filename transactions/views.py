@@ -2,21 +2,59 @@ from dateutil.relativedelta import relativedelta
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from transactions.constants import DEPOSIT, WITHDRAWAL
-from transactions.forms import DepositForm, WithdrawForm
+from transactions.forms import (
+    DepositForm,
+    TransactionDateRangeForm,
+    WithdrawForm,
+)
 from transactions.models import Transaction
 
 
-class TransactionMixin(LoginRequiredMixin, CreateView):
+class TransactionRepostView(LoginRequiredMixin, ListView):
+    template_name = 'transactions/transaction_report.html'
+    model = Transaction
+    form_data = {}
+
+    def get(self, request, *args, **kwargs):
+        form = TransactionDateRangeForm(request.GET or None)
+        if form.is_valid():
+            self.form_data = form.cleaned_data
+
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(
+            account=self.request.user.account
+        )
+
+        daterange = self.form_data.get("daterange")
+
+        if daterange:
+            queryset = queryset.filter(timestamp__date__range=daterange)
+
+        return queryset.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'account': self.request.user.account,
+            'form': TransactionDateRangeForm(self.request.GET or None)
+        })
+
+        return context
+
+
+class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     template_name = 'transactions/transaction_form.html'
     model = Transaction
     title = ''
-    #TODO: Update this URL
-    success_url = reverse_lazy('/')
+    success_url = reverse_lazy('transactions:transaction_report')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -34,7 +72,7 @@ class TransactionMixin(LoginRequiredMixin, CreateView):
         return context
 
 
-class DepositMoneyView(TransactionMixin):
+class DepositMoneyView(TransactionCreateMixin):
     form_class = DepositForm
     title = 'Deposit Money to Your Account'
 
@@ -75,7 +113,7 @@ class DepositMoneyView(TransactionMixin):
         return super().form_valid(form)
 
 
-class WithdrawMoneyView(TransactionMixin):
+class WithdrawMoneyView(TransactionCreateMixin):
     form_class = WithdrawForm
     title = 'Withdraw Money from Your Account'
 
