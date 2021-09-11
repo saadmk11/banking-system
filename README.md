@@ -30,7 +30,7 @@ Be sure you have the following installed on your development machine:
 ## Requirements
 
 + celery==4.4.7
-+ Django==3.1
++ Django==3.2
 + django-celery-beat==2.0.0
 + python-dateutil==2.8.1
 + redis==3.5.3
