@@ -87,6 +87,11 @@ Create Superuser,
 python manage.py createsuperuser
 ```
 
+Create the dummy account types,
+```bash
+python manage.py insert_account_type
+```
+
 Run Celery
 (Different Terminal Window with Virtual Environment Activated)
 ```bash
