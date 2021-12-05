@@ -1,5 +1,5 @@
 celery==4.4.7
-Django==3.2.7
+Django==3.2.9
 django-celery-beat==2.1.0
 python-dateutil==2.8.2
 redis==3.5.3
