@@ -14,7 +14,7 @@
           - uses: actions/checkout@v2
 
           - name: Run Changelog-CI
-            uses: saadmk11/changelog-ci@v0.8.0
+            uses: saadmk11/changelog-ci@v1.0.0
             env:
               USERNAME:  ${{secrets.USERNAME}}
               EMAIL:  ${{secrets.EMAIL}}
