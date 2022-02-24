@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'django_celery_beat',
 
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'core',
     'transactions',
 ]

@@ -1,11 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.views import LoginView
-from django.shortcuts import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, RedirectView
+from django.contrib.auth.decorators import login_required
+
+
 
 from .forms import UserRegistrationForm, UserAddressForm
+from .models import Profile
 
 
 User = get_user_model()
@@ -73,3 +77,9 @@ class LogoutView(RedirectView):
         if self.request.user.is_authenticated:
             logout(self.request)
         return super().get_redirect_url(*args, **kwargs)
+
+
+@login_required(login_url='/accounts/login')
+def profile_view(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    return render(request, 'accounts/profile.html', {'profile': profile})

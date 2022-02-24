@@ -19,6 +19,11 @@
                 <a href="{% url 'transactions:withdraw_money' %}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
                     Withdraw
                 </a>
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}" class="block mt-4 lg:inline-block lg:mt-0 lg:pl-5 text-white hover:text-white">
+                    Dashboard
+                </a>
+                {% endif %}
             </div>
             <div>
                 <a href="{% url 'accounts:user_logout' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Logout</a>
