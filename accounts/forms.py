@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
-from .models import User, BankAccountType, UserBankAccount, UserAddress
+from .models import User, BankAccountType, UserBankAccount, UserAddress, Profile
 from .constants import GENDER_CHOICE
 
 
@@ -79,8 +79,26 @@ class UserRegistrationForm(UserCreationForm):
                 birth_date=birth_date,
                 account_type=account_type,
                 account_no=(
-                    user.id +
-                    settings.ACCOUNT_NUMBER_START_FROM
+                    user.id + settings.ACCOUNT_NUMBER_START_FROM
                 )
             )
         return user
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
+
+
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model = UserAddress
+        fields = ['street_address', 'city', 'postal_code', 'country']
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['picture']
+
