@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block head_title %}{{profile.user.first_name }} profile{% endblock %}
+
+{% block content %}
+
+<div class="content-section ">
+    <div class="media">
+      <img class="" src="{{ user.profile.picture.url }}">
+      <div class="media-body">
+        <h2 class="account-heading">{{ user.first_name }}</h2>
+        <p class="text-secondary ">{{ user.email }}</p>
+        <p class="">{{user.address.street_address}}</p>
+        <p>{{user.account.account_no}}</p>
+        <p>{{user.account.balance}}</p>
+      </div>
+    </div>
+    <!-- FORM HERE -->
+  </div>
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% block head_title %}{{profile.user.first_name }} profile{% endblock %}
+
+{% block content %}
+
+<div class="content-section ">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user.as_p }}
+        {{ profile.as_p }}
+        {{ userAddress.as_p }}
+        <input type="submit" value="update">
+
+    </form>
+  </div>
+
+
+
+
+{% endblock %}
+

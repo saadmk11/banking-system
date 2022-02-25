@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'django_celery_beat',
 
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'core',
     'transactions',
 ]
@@ -125,6 +125,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR/'static']
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
+
+
 
 ACCOUNT_NUMBER_START_FROM = 1000000000
 MINIMUM_DEPOSIT_AMOUNT = 10
@@ -140,3 +146,5 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+
+
