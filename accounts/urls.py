@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import UserRegistrationView, LogoutView, UserLoginView
+from .views import UserRegistrationView, LogoutView, UserLoginView, UserValidationView
 
 
 app_name = 'accounts'
@@ -17,5 +17,9 @@ urlpatterns = [
     path(
         "register/", UserRegistrationView.as_view(),
         name="user_registration"
+    ),
+    path(
+        "validate/", UserValidationView.as_view(),
+        name="user_validation"
     ),
 ]
