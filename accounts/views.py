@@ -101,7 +101,12 @@ class UserValidationView(TemplateView):
         return render(request, 'accounts/user_otp.html')
 
     def post(self, request, *args, **kwargs):
-        otp = request.POST["otp"]
+        otp = request.POST.get("otp", 0)
+        if otp == 0:
+            email = request.session["email"]
+            send_otp(email)
+            return render(request, 'accounts/user_otp.html')
+
         if len(otp) < 6:
             messages.error(
                 self.request,

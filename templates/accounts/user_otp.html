@@ -3,19 +3,30 @@
 
 {% block content %}
 <h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Enter OTP</h1>
-<div class="mt-10">
-    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<div class="bg-white mt-10 shadow-md rounded">
+    <form method="post" class="bg-white flex justify-center items-center  px-8 pt-6 pb-3 ">
         {% csrf_token %}
 
-        <div class="mb-4">
-            <label for="otp" class="mr-2">Enter 6-digit OTP:</label>
-            <input maxlength="6" class="border rounded px-3 py-2 w-32 text-center" name="otp" id="otp" type="text">
-        </div>
+
 
         <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <div class="mb-4">
+                <label for="otp" class="mr-2">Enter 6-digit OTP:</label>
+                <input maxlength="6" class="border rounded px-3 py-2 w-32 text-center" name="otp" id="otp" type="text">
+            </div>
+            <button class="bg-blue-500 ml-2 mb-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                 Submit
             </button>
+
+        </div>
+    </form>
+    <form method="post" class="bg-white flex justify-center items-center shadow-md rounded">
+        {% csrf_token %}
+        <div class="flex items-center justify-between">
+            <button class="text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Regenerate OTP
+            </button>
+
         </div>
     </form>
 </div>
