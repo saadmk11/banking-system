@@ -4,7 +4,7 @@ from django import forms
 from django.conf import settings
 
 from .models import Transaction
-
+from accounts.models import UserBankAccount
 
 class TransactionForm(forms.ModelForm):
 
@@ -91,3 +91,25 @@ class TransactionDateRangeForm(forms.Form):
                 raise forms.ValidationError("Please select a date range.")
         except (ValueError, AttributeError):
             raise forms.ValidationError("Invalid date range")
+
+
+class TransferForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = [
+            'amount',
+            'account_to'
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 rounded '
+                    'py-3 px-4 leading-tight focus:outline-none '
+                    'focus:bg-white focus:border-gray-500'
+                )
+            })

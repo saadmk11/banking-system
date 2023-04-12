@@ -5,14 +5,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, ListView
+from itertools import chain
+from django.shortcuts import HttpResponseRedirect, render
 
-from transactions.constants import DEPOSIT, WITHDRAWAL
+from transactions.constants import DEPOSIT, WITHDRAWAL, TRANSFER
 from transactions.forms import (
     DepositForm,
     TransactionDateRangeForm,
     WithdrawForm,
+    TransferForm
 )
 from transactions.models import Transaction
+from accounts.models import UserBankAccount
 
 
 class TransactionRepostView(LoginRequiredMixin, ListView):
@@ -28,15 +32,16 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(
+        queryset_to = super().get_queryset().filter(
             account=self.request.user.account
         )
+
+        queryset = queryset_to
 
         daterange = self.form_data.get("daterange")
 
         if daterange:
             queryset = queryset.filter(timestamp__date__range=daterange)
-        print(queryset.distinct())
 
         return queryset.distinct()
 
@@ -94,9 +99,9 @@ class DepositMoneyView(TransactionCreateMixin):
                 next_interest_month = 0
             account.initial_deposit_date = now
             account.interest_start_date = (
-                now + relativedelta(
-                    months=+next_interest_month
-                )
+                    now + relativedelta(
+                months=+next_interest_month
+            )
             )
 
         account.balance += amount
@@ -136,3 +141,56 @@ class WithdrawMoneyView(TransactionCreateMixin):
         )
 
         return super().form_valid(form)
+
+
+class TransferMoneyView(CreateView):
+    template_name = 'transactions/transaction_transfer.html'
+    form_class = TransferForm
+    form_data = {}
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'form': self.form_class})
+
+    def post(self, request, *args, **kwargs):
+        form = TransferForm(request.POST)
+        if form.is_valid():
+
+            user_to = form.cleaned_data.get("account_to")
+            if user_to:
+                amount = form.cleaned_data.get('amount')
+                if self.request.user.account.balance >= amount:
+                    self.request.user.account.balance -= amount
+                    self.request.user.account.save(update_fields=['balance'])
+                    user_to = UserBankAccount.objects.get(account_no=user_to.account_no)
+                    user_to.balance += amount
+                    user_to.save(update_fields=['balance'])
+                    user_from = UserBankAccount.objects.get(account_no=request.user.account.account_no)
+
+                    transaction = Transaction(amount= -form.cleaned_data.get('amount'),
+                                              balance_after_transaction=user_from.balance,
+                                              transaction_type=TRANSFER, account=self.request.user.account,
+                                              account_to=user_to
+                                              )
+
+                    transaction_to = Transaction(amount= form.cleaned_data.get('amount'),
+                                              balance_after_transaction=user_to.balance,
+                                              transaction_type=TRANSFER, account=user_to,
+                                              account_to=self.request.user.account
+                                              )
+                    transaction_to.save()
+                    transaction.save()
+                    messages.success(
+                        self.request,
+                        f'Sent {amount} to {user_to.account_no}'
+                    )
+                else:
+                    messages.error(
+                        self.request,
+                        f'Not enough gold'
+                    )
+            else:
+                messages.error(
+                    self.request,
+                    f'User doesnt exist'
+                )
+        return render(request, self.template_name, {'form': self.form_class})

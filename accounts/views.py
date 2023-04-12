@@ -101,7 +101,7 @@ class UserValidationView(TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        if not request.session["email"]:
+        if not request.session.get("email"):
             return HttpResponseRedirect(
                 reverse_lazy('accounts:user_login')
             )
