@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import UserRegistrationView, LogoutView, UserLoginView, UserValidationView
+from .views import UserRegistrationView, LogoutView, UserLoginView, UserValidationView, UserAccountView
 
 
 app_name = 'accounts'
@@ -22,4 +22,6 @@ urlpatterns = [
         "validate/", UserValidationView.as_view(),
         name="user_validation"
     ),
+    path("accounts/", UserAccountView.as_view(), name="view_accounts"),
+
 ]

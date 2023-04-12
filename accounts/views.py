@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 import requests
 from .forms import UserRegistrationForm, UserAddressForm
+from .models import User, BankAccountType, UserBankAccount
+from django.contrib.auth import authenticate
 
 User = get_user_model()
 
@@ -34,7 +36,6 @@ class UserRegistrationView(TemplateView):
             url = 'https://otp-tp.herokuapp.com/api/v1/user'
             payload = {"email": user.email}
             requests.post(url, json=payload)
-            login(self.request, user)
             messages.success(
                 self.request,
                 (
@@ -64,15 +65,26 @@ class UserRegistrationView(TemplateView):
 
 class UserLoginView(LoginView):
     template_name = 'accounts/user_login.html'
-    redirect_authenticated_user = True
 
     def post(self, request, *args, **kwargs):
-        request.session["email"] = request.POST["username"]
-        email = request.session["email"]
-        send_otp(email)
-        return HttpResponseRedirect(
-            reverse_lazy('accounts:user_validation')
-        )
+        user = authenticate(username=request.POST["username"], password=request.POST["password"])
+        if user is not None:
+            request.session["email"] = request.POST["username"]
+            email = request.session["email"]
+            send_otp(email)
+            return HttpResponseRedirect(
+                reverse_lazy('accounts:user_validation')
+            )
+        else:
+            messages.error(
+                self.request,
+                (
+                    f'Wrong credentials. '
+                )
+            )
+            return HttpResponseRedirect(
+                reverse_lazy('accounts:user_login')
+            )
 
 
 class LogoutView(RedirectView):
@@ -134,6 +146,19 @@ class UserValidationView(TemplateView):
 
         )
 
+
+class UserAccountView(TemplateView):
+    template_name = 'accounts/user_accounts.html'
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(email=request.session["email"])
+        accounts = UserBankAccount.objects.filter(user_id=user.id)
+        print(accounts)
+        return render(request, 'accounts/user_accounts.html', {'accounts': accounts})
+
+
 def send_otp(email):
     url = 'https://otp-tp.herokuapp.com/api/v1/user/otp/generate/' + email
-    requests.get(url)
+    print(url)
+    response = requests.get(url)
+    print(response)

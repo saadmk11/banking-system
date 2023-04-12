@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}Accounts{% endblock %}
+
+{% block content %}
+
+<h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Accounts</h1>
+<hr>
+<div class="w-full mt-10 flex justify-center align-center">
+{% for account in accounts %}
+    <div class="mb-4">
+        <a href="transactions:transaction_report">
+            <h3> {{ account.account_no }}</h3>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

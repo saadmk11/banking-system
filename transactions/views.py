@@ -36,6 +36,7 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
 
         if daterange:
             queryset = queryset.filter(timestamp__date__range=daterange)
+        print(queryset.distinct())
 
         return queryset.distinct()
 
@@ -85,9 +86,12 @@ class DepositMoneyView(TransactionCreateMixin):
 
         if not account.initial_deposit_date:
             now = timezone.now()
-            next_interest_month = int(
-                12 / account.account_type.interest_calculation_per_year
-            )
+            if account.account_type.interest_calculation_per_year != 0:
+                next_interest_month = int(
+                    12 / account.account_type.interest_calculation_per_year
+                )
+            else:
+                next_interest_month = 0
             account.initial_deposit_date = now
             account.interest_start_date = (
                 now + relativedelta(
