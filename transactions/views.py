@@ -24,16 +24,29 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
     model = Transaction
     form_data = {}
 
-    def get(self, request, *args, **kwargs):
-        form = TransactionDateRangeForm(request.GET or None)
-        if form.is_valid():
-            self.form_data = form.cleaned_data
+    def __init__(self):
+        super().__init__()
+        self.account_id = None
 
-        return super().get(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        if request.GET.get("account_id"):
+            form = TransactionDateRangeForm(request.GET or None)
+            account = UserBankAccount.objects.get(account_no=request.GET.get("account_id"))
+            if account.user.id == self.request.user.id:
+                self.account_id = request.GET.get("account_id")
+                if form.is_valid():
+                    self.form_data = form.cleaned_data
+                return super().get(request, *args, **kwargs)
+            else:
+                return HttpResponseRedirect("/accounts/accounts/")
+
+        else:
+            return HttpResponseRedirect("/accounts/accounts/")
 
     def get_queryset(self):
+        account = UserBankAccount.objects.get(account_no=self.account_id)
         queryset_to = super().get_queryset().filter(
-            account=self.request.user.account
+            account=account
         )
 
         queryset = queryset_to
@@ -48,7 +61,7 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'account': self.request.user.account,
+            'account': UserBankAccount.objects.get(account_no=self.account_id),
             'form': TransactionDateRangeForm(self.request.GET or None)
         })
 
@@ -166,17 +179,17 @@ class TransferMoneyView(CreateView):
                     user_to.save(update_fields=['balance'])
                     user_from = UserBankAccount.objects.get(account_no=request.user.account.account_no)
 
-                    transaction = Transaction(amount= -form.cleaned_data.get('amount'),
+                    transaction = Transaction(amount=-form.cleaned_data.get('amount'),
                                               balance_after_transaction=user_from.balance,
                                               transaction_type=TRANSFER, account=self.request.user.account,
                                               account_to=user_to
                                               )
 
-                    transaction_to = Transaction(amount= form.cleaned_data.get('amount'),
-                                              balance_after_transaction=user_to.balance,
-                                              transaction_type=TRANSFER, account=user_to,
-                                              account_to=self.request.user.account
-                                              )
+                    transaction_to = Transaction(amount=form.cleaned_data.get('amount'),
+                                                 balance_after_transaction=user_to.balance,
+                                                 transaction_type=TRANSFER, account=user_to,
+                                                 account_to=self.request.user.account
+                                                 )
                     transaction_to.save()
                     transaction.save()
                     messages.success(
@@ -186,7 +199,7 @@ class TransferMoneyView(CreateView):
                 else:
                     messages.error(
                         self.request,
-                        f'Not enough gold'
+                        f'Not enough money'
                     )
             else:
                 messages.error(

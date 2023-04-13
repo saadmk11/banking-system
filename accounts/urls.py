@@ -22,6 +22,6 @@ urlpatterns = [
         "validate/", UserValidationView.as_view(),
         name="user_validation"
     ),
-    path("accounts/", UserAccountView.as_view(), name="view_accounts"),
+    path("dashboard/", UserAccountView.as_view(), name="view_accounts"),
 
 ]

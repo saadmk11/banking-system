@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
 
-{% block head_title %}Transaction Report{% endblock %}
+{% block head_title %}Account no. {{ account.account_no }}{% endblock %}
 
 {% block head_extra %}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -10,11 +10,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Transaction Report</h1>
+    <h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Transaction Report of account no. {{ account.account_no }}</h1>
+    <p class="font-mono text-xl text-center pb-5 "> Type of account: {{ account.account_type.name }}</p>
     <hr />
     <form method="get">
         <div class="mt-10 h-10 pl-3 pr-2 bg-white border rounded-md border-gray-500 flex justify-between items-center relative">
             <input type="search" name="daterange" id="search" placeholder="Filter using date range" value="{{ request.GET.daterange }}" class="appearance-none w-full outline-none focus:outline-none active:outline-none" />
+            <input type="hidden" name="account_id" value={{ account.account_no }}>
             <button type="submit" class="ml-1 outline-none focus:outline-none active:outline-none">
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
                     <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -66,7 +68,6 @@
         <a href={% url 'transactions:transfer_money' %}>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                    Make transfer
-
             </button>
         </a>
     </div>

@@ -9,9 +9,20 @@
 <div class="w-full mt-10 flex justify-center align-center">
 {% for account in accounts %}
     <div class="mb-4">
-        <a href="transactions:transaction_report">
-            <h3> {{ account.account_no }}</h3>
-        </a>
+        <form method="get" action="/transactions/report">
+            <input type="hidden" value={{ account.account_no }} name="account_id">
+            <button class="bg-blue-100 hover:bg-blue-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                <div class="max-w-sm p-6 ">
+                    <a href="#">
+                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"> Account no. {{ account.account_no }}</h5>
+                    </a>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{ account.account_type.name }}</p>
+
+                    <p class="inline-flex items-center text-blue-600 hover:underline">{{ account.balance }}$</p>
+                </div>
+
+            </button>
+        </form>
     </div>
     {% endfor %}
 </div>

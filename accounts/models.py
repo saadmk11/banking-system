@@ -32,6 +32,7 @@ class User(AbstractUser):
 
 class BankAccountType(models.Model):
     name = models.CharField(max_length=128)
+
     maximum_withdrawal_amount = models.DecimalField(
         decimal_places=2,
         max_digits=12
@@ -45,6 +46,10 @@ class BankAccountType(models.Model):
     interest_calculation_per_year = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(12)],
         help_text='The number of times interest will be calculated per year'
+    )
+    saving_goal = models.BigIntegerField(
+        help_text='Saving goal for saving account',
+        null=True, blank=True
     )
 
     def __str__(self):
@@ -61,7 +66,7 @@ class BankAccountType(models.Model):
         n = Decimal(self.interest_calculation_per_year)
 
         # Basic Future Value formula to calculate interest
-        interest = (p * (1 + ((r/100) / n))) - p
+        interest = (p * (1 + ((r / 100) / n))) - p
 
         return round(interest, 2)
 
