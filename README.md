@@ -34,7 +34,7 @@ Be sure you have the following installed on your development machine:
 + django-celery-beat==2.0.0
 + python-dateutil==2.8.1
 + redis==3.5.3
-
++ requests==2.28.1
 ## Install Redis Server
 
 [Redis Quick Start](https://redis.io/topics/quickstart)
