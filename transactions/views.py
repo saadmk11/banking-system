@@ -38,10 +38,10 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
                     self.form_data = form.cleaned_data
                 return super().get(request, *args, **kwargs)
             else:
-                return HttpResponseRedirect("/accounts/accounts/")
+                return HttpResponseRedirect("/accounts/dashboard/")
 
         else:
-            return HttpResponseRedirect("/accounts/accounts/")
+            return HttpResponseRedirect("/accounts/dashboard/")
 
     def get_queryset(self):
         account = UserBankAccount.objects.get(account_no=self.account_id)
