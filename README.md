@@ -16,6 +16,11 @@ This is an Online Banking Concept created using Django Web Framework.
 * Ability to add Minimum and Maximum Transaction amount restriction
 * Modern UI with Tailwind CSS
 
+## New Feature Coming Soon
+
+* Ability to make transfer to other accounts (applies to both current & savings)
+* Ability for users to make contributions to their accounts e.g.: displays a summary of the user's contributions over time, including the amount contributed, the date of each contribution, and any other relevant information.
+
 
 ## Prerequisites
 

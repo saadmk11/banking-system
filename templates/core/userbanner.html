@@ -1,0 +1,16 @@
+{% if request.user.is_authenticated %}
+<div class="bg-green-100 border-t-4 border-green-500 rounded-b text-green-900 px-4 py-3 shadow-md" role="alert">
+    <div class="flex">
+        <div class="py-1">
+            <svg class="fill-current h-6 w-6 text-green-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M18.555 10.953A8 8 0 111.445 10a8 8 0 0117.11.953zM10 14a4 4 0 100-8 4 4 0 000 8z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+            <p class="font-bold">Hi {{ request.user.first_name }} {{ request.user.last_name }}!</p>
+            <p class="text-sm">Your last login was on {{ request.user.last_login }}</p>
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+{% endif %}
