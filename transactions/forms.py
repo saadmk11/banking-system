@@ -91,3 +91,37 @@ class TransactionDateRangeForm(forms.Form):
                 raise forms.ValidationError("Please select a date range.")
         except (ValueError, AttributeError):
             raise forms.ValidationError("Invalid date range")
+
+
+class TransferForm(TransactionForm):
+
+    def getBenificiaryAccount(self):
+        return account_no
+
+    def clean_amount(self):
+        account = self.account
+        min_withdraw_amount = settings.MINIMUM_WITHDRAWAL_AMOUNT
+        max_withdraw_amount = (
+            account.account_type.maximum_withdrawal_amount
+        )
+        balance = account.balance
+
+        amount = self.cleaned_data.get('amount')
+
+        if amount < min_withdraw_amount:
+            raise forms.ValidationError(
+                f'You can withdraw at least {min_withdraw_amount} $'
+            )
+
+        if amount > max_withdraw_amount:
+            raise forms.ValidationError(
+                f'You can withdraw at most {max_withdraw_amount} $'
+            )
+
+        if amount > balance:
+            raise forms.ValidationError(
+                f'You have {balance} $ in your account. '
+                'You can not withdraw more than your account balance'
+            )
+
+        return amount

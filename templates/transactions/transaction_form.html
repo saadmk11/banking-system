@@ -9,6 +9,22 @@
     <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {% csrf_token %}
 
+        {% if 'Transfer' in title %}
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="account_no">
+                    Beneficiary Account No
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight border rounded-md border-gray-500 focus:outline-none focus:shadow-outline" name="account_no" id="account_no" type="number" required placeholder="Account No">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="account_name">
+                    Beneficiary Account Name
+                </label>
+                {{ registration_form.account_name }}
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight border rounded-md border-gray-500 focus:outline-none focus:shadow-outline" name="account_name" id="account_name" type="number" required placeholder="Account Name">
+            </div>
+        {% endif %}
+
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
                 Amount
