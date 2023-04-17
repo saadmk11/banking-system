@@ -52,6 +52,12 @@ class BankAccountType(models.Model):
         null=True, blank=True
     )
 
+    is_debet_account = models.BooleanField(default=True)
+
+    is_saving_account = models.BooleanField(default=False)
+
+    is_loan = models.BooleanField(default=False)
+
     def __str__(self):
         return self.name
 
@@ -72,9 +78,9 @@ class BankAccountType(models.Model):
 
 
 class UserBankAccount(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User,
-        related_name='account',
+        related_name='accounts',
         on_delete=models.CASCADE,
     )
     account_type = models.ForeignKey(

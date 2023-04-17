@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Dashboard of Saving Account
+        no. {{ account_no }}</h1>
+    <p class="font-mono text-xl text-center pb-5 ">Saving account balance: $ {{ savings_balance }}</p>
+    <p class="font-mono text-xl text-center pb-5 ">Debet account balance: $ {{ balance }}</p>
+    <p class="font-mono text-xl text-center pb-5 ">Annual interest rate: {{ interest_rate }} %</p>
+
+    <hr>
+
+    <br>
+    <p class="font-mono text-xl text-left pb-1 ">Deposit money to your Saving Account : </p>
+    <form id=depositSavingAccount method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
+                Amount
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight border rounded-md border-gray-500 focus:outline-none focus:shadow-outline"
+                   name="depositToSavingAcc" type="number" required placeholder="Amount">
+        </div>
+        {% if form.amount.errors %}
+            {% for error in form.amount.errors %}
+                <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+            Submit
+        </button>
+    </form>
+
+    <br>
+
+    <p class="font-mono text-xl text-left pb-1 ">Withdraw money from your Saving Account : </p>
+    <form id=withdrawSavingAccount method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
+                Amount
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight border rounded-md border-gray-500 focus:outline-none focus:shadow-outline"
+                   name="withdrawFromSavingAccount" type="number" required placeholder="Amount">
+        </div>
+        {% if form.amount.errors %}
+            {% for error in form.amount.errors %}
+                <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+            Submit
+        </button>
+    </form>
+
+{% endblock %}
+

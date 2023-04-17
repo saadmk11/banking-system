@@ -10,23 +10,32 @@
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         {% if request.user.is_authenticated %}
             <div class="text-md lg:flex-grow">
-                <a href="{% url 'accounts:view_accounts' %}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+                <a href="{% url 'accounts:view_accounts' %}"
+                   class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                     Dashboard
                 </a>
-                <a href="{% url 'transactions:deposit_money' %}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+                <a href="{% url 'transactions:deposit_money' %}"
+                   class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                     Deposit
                 </a>
-                <a href="{% url 'transactions:withdraw_money' %}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
+                <a href="{% url 'transactions:withdraw_money' %}"
+                   class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                     Withdraw
+                </a>
+                <a href="{% url 'accounts:view_saving_account' %}"
+                   class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white  mr-4">
+                    Savings
                 </a>
             </div>
             <div>
-                <a href="{% url 'accounts:user_logout' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Logout</a>
+                <a href="{% url 'accounts:user_logout' %}"
+                   class="inline-block font-medium text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Logout</a>
             </div>
         {% else %}
             <div class="text-md lg:flex-grow"></div>
             <div>
-                <a href="{% url 'accounts:user_login' %}" class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Login</a>
+                <a href="{% url 'accounts:user_login' %}"
+                   class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Login</a>
             </div>
             <div>
                 <a href="{% url 'accounts:user_registration' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Register</a>
