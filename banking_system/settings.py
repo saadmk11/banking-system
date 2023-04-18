@@ -133,10 +133,19 @@ MINIMUM_WITHDRAWAL_AMOUNT = 10
 # Login redirect
 LOGIN_REDIRECT_URL = 'home'
 
-# Celery Settings
+# # Celery Settings
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = TIME_ZONE
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = TIME_ZONE
+
+CELERY_IMPORTS = ('transactions.tasks',)
+
+CELERY_BEAT_SCHEDULE = {
+    'calculate_interest_every_minute': {
+        'task': 'transactions.tasks.calculate_interest',
+        'schedule': 10.0,  # every 60 seconds if celery worker and beat is active
+    },
+}

@@ -11,8 +11,8 @@
 
 {% block content %}
     <h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Transaction Report of account
-        no. {{ account_no }}</h1>
-    <p class="font-mono text-xl text-center pb-5 "> Type of account: {{ account_type }}</p>
+        no. {{ account.account_no }}</h1>
+    <p class="font-mono text-xl text-center pb-5 "> Type of account: {{ account.account_type.name }}</p>
     <hr/>
     <form method="get">
         <div class="mt-10 h-10 pl-3 pr-2 bg-white border rounded-md border-gray-500 flex justify-between items-center relative">
@@ -37,8 +37,6 @@
         <thead class="bg-gray-800 text-white">
         <tr class="uppercase font-semibold text-sm">
             <th class="px-4 py-2">Transaction Type</th>
-            <th class="px-4 py-2">From</th>
-            <th class="px-4 py-2">To</th>
             <th class="px-4 py-2">Date</th>
             <th class="px-4 py-2">Amount</th>
             <th class="px-4 py-2">Balance After Transaction</th>
@@ -49,13 +47,6 @@
         {% for transaction in object_list %}
             <tr class="{% cycle 'bg-gray-300' 'bg-white-100' %}">
                 <td class="border px-4 py-2 text-center">{{ transaction.get_transaction_type_display }}</td>
-                {% if transaction.amount > 0 %}
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account_to.account_no }}</td>
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account.account_no }}</td>
-                {% else %}
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account.account_no }}</td>
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account_to.account_no }}</td>
-                {% endif %}
                 <td class="border px-4 py-2 text-center">{{ transaction.timestamp }}</td>
                 <td class="border px-4 py-2 text-center">$ {{ transaction.amount }}</td>
                 <td class="border px-4 py-2 text-center">$ {{ transaction.balance_after_transaction }}</td>
@@ -63,19 +54,11 @@
             </tr>
         {% endfor %}
         <tr class="bg-gray-600 text-white">
-            <th class="px-4 py-2 text-right" colspan="5">Final Balance</th>
+            <th class="px-4 py-2 text-right" colspan="3">Final Balance</th>
             <th class="px-4 py-2 text-center">$ {{ account_balance }}</th>
         </tr>
         </tbody>
     </table>
-    <div class="flex align-center justify-center mt-2">
-        <a href={% url 'transactions:transfer_money' %}>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Make transfer
-            </button>
-        </a>
-    </div>
-
 
 {% endblock %}
 

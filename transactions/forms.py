@@ -4,10 +4,10 @@ from django import forms
 from django.conf import settings
 
 from .models import Transaction
-from accounts.models import UserBankAccount
+from accounts.models import UserBankAccount, BankAccountType
+
 
 class TransactionForm(forms.ModelForm):
-
     class Meta:
         model = Transaction
         fields = [
@@ -24,6 +24,7 @@ class TransactionForm(forms.ModelForm):
 
     def save(self, commit=True):
         self.instance.account = self.account
+        self.instance.amount = self.cleaned_data['amount']  # +- znamienko pred amount v sekcii transakcie
         self.instance.balance_after_transaction = self.account.balance
         return super().save()
 
@@ -103,6 +104,9 @@ class TransferForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.fields['account_to'].queryset = UserBankAccount.objects.filter(
+            account_type_id__is_saving_account=False)  # luxusne query
 
         for field in self.fields:
             self.fields[field].widget.attrs.update({

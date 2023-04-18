@@ -52,6 +52,9 @@ class UserRegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # Filter account types to show only those with is_saving_account=False
+        self.fields['account_type'].queryset = BankAccountType.objects.filter(is_saving_account=False)
+
         for field in self.fields:
             self.fields[field].widget.attrs.update({
                 'class': (
@@ -79,8 +82,65 @@ class UserRegistrationForm(UserCreationForm):
                 birth_date=birth_date,
                 account_type=account_type,
                 account_no=(
-                    user.id +
-                    settings.ACCOUNT_NUMBER_START_FROM
+                        user.id +
+                        settings.ACCOUNT_NUMBER_START_FROM
                 )
             )
         return user
+
+
+class SavingAccountRegistrationForm(UserCreationForm):  # *LIDL* ? solution so far for SavingAccountRegistration
+    account_type = forms.ModelChoiceField(
+        BankAccountType.objects.filter(is_saving_account=True)
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Filter account types to show only those with is_saving_account=False
+        self.fields['account_type'].queryset = BankAccountType.objects.filter(is_saving_account=True)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 '
+                    'rounded py-3 px-4 leading-tight '
+                    'focus:outline-none focus:bg-white '
+                    'focus:border-gray-500'
+                )
+            })
+
+    @transaction.atomic
+    def save(self, commit=True):
+        if commit:
+            account_type = self.cleaned_data.get('account_type')
+            UserBankAccount.objects.create(
+                account_type=account_type,
+                account_no=(
+                        1 +
+                        settings.ACCOUNT_NUMBER_START_FROM
+                )
+            )
+
+
+class SavingAccountForm(forms.ModelForm):
+    class Meta:
+        model = UserBankAccount
+        fields = ['account_type']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['account_type'].queryset = BankAccountType.objects.filter(is_saving_account=True)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 '
+                    'rounded py-3 px-4 leading-tight '
+                    'focus:outline-none focus:bg-white '
+                    'focus:border-gray-500'
+                )
+            })

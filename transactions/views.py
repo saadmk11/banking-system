@@ -15,7 +15,7 @@ from transactions.forms import (
     WithdrawForm,
     TransferForm
 )
-from transactions.models import Transaction
+from transactions.models import Transaction, SavingTransaction
 from accounts.models import UserBankAccount
 
 
@@ -32,16 +32,54 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
         if request.GET.get("account_id"):
             form = TransactionDateRangeForm(request.GET or None)
             account = UserBankAccount.objects.get(account_no=request.GET.get("account_id"))
+            if (account.account_type.is_saving_account):
+                savings_view = SavingsTransactionRepostView.as_view()
+                return savings_view(request, account_id=request.GET.get("account_id"))
+                # HERE I NEED CALL SavingsTransactionRepostView with account arguments and all
             if account.user.id == self.request.user.id:
                 self.account_id = request.GET.get("account_id")
                 if form.is_valid():
                     self.form_data = form.cleaned_data
-                return super().get(request, *args, **kwargs)
+                # transactions = self.get_queryset()
+                transactions = Transaction.objects.filter(account_id=account.id)
+                context = self.get_context_data(object_list=transactions)
+                context['account_balance'] = account.balance
+                context['account_no'] = account.account_no
+                context['account_type'] = account.account_type
+                return render(request, self.template_name, context=context)
             else:
-                return HttpResponseRedirect("/accounts/accounts/")
+                return HttpResponseRedirect("/accounts/dashboard/")
 
         else:
-            return HttpResponseRedirect("/accounts/accounts/")
+            return HttpResponseRedirect("/accounts/dashboard/")
+
+
+class SavingsTransactionRepostView(LoginRequiredMixin, ListView):
+    template_name = 'transactions/transaction_report_savings.html'
+    model = SavingTransaction
+    form_data = {}
+
+    def __init__(self):
+        super().__init__()
+        self.account_id = None
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get("account_id"):
+            form = TransactionDateRangeForm(request.GET or None)
+            account = UserBankAccount.objects.get(account_no=request.GET.get("account_id"))
+            if account.user.id == self.request.user.id:
+                self.account_id = request.GET.get("account_id")
+                if form.is_valid():
+                    self.form_data = form.cleaned_data
+                transactions = self.get_queryset()
+                context = self.get_context_data(object_list=transactions)
+                context['account_balance'] = account.balance
+                return render(request, self.template_name, context=context)
+            else:
+                return HttpResponseRedirect("/accounts/dashboard/")
+
+        else:
+            return HttpResponseRedirect("/accounts/dashboard/")
 
     def get_queryset(self):
         account = UserBankAccount.objects.get(account_no=self.account_id)
@@ -77,7 +115,7 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
-            'account': self.request.user.account
+            'account': self.request.user.accounts.first()
         })
         return kwargs
 
@@ -100,7 +138,7 @@ class DepositMoneyView(TransactionCreateMixin):
 
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
-        account = self.request.user.account
+        account = self.request.user.accounts.first()
 
         if not account.initial_deposit_date:
             now = timezone.now()
@@ -131,6 +169,7 @@ class DepositMoneyView(TransactionCreateMixin):
             f'{amount}$ was deposited to your account successfully'
         )
 
+        form.account = account
         return super().form_valid(form)
 
 
@@ -144,15 +183,18 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
+        account = self.request.user.accounts.first()
 
-        self.request.user.account.balance -= form.cleaned_data.get('amount')
-        self.request.user.account.save(update_fields=['balance'])
+        account.balance -= form.cleaned_data.get('amount')
+        account.save(update_fields=['balance'])
 
         messages.success(
             self.request,
             f'Successfully withdrawn {amount}$ from your account'
         )
 
+        form.account = account
+        form.cleaned_data['amount'] = -form.cleaned_data['amount']
         return super().form_valid(form)
 
 
@@ -162,36 +204,38 @@ class TransferMoneyView(CreateView):
     form_data = {}
 
     def get(self, request, *args, **kwargs):
+
         return render(request, self.template_name, {'form': self.form_class})
 
     def post(self, request, *args, **kwargs):
         form = TransferForm(request.POST)
+        account = self.request.user.accounts.first()
         if form.is_valid():
 
             user_to = form.cleaned_data.get("account_to")
             if user_to:
                 amount = form.cleaned_data.get('amount')
-                if self.request.user.account.balance >= amount:
-                    self.request.user.account.balance -= amount
-                    self.request.user.account.save(update_fields=['balance'])
+                if account.balance >= amount:
+                    account.balance -= amount
+                    account.save(update_fields=['balance'])
                     user_to = UserBankAccount.objects.get(account_no=user_to.account_no)
                     user_to.balance += amount
                     user_to.save(update_fields=['balance'])
-                    user_from = UserBankAccount.objects.get(account_no=request.user.account.account_no)
+                    user_from = UserBankAccount.objects.get(account_no=request.user.accounts.first().account_no)
 
                     transaction = Transaction(amount=-form.cleaned_data.get('amount'),
                                               balance_after_transaction=user_from.balance,
-                                              transaction_type=TRANSFER, account=self.request.user.account,
+                                              transaction_type=TRANSFER, account=user_from,
                                               account_to=user_to
                                               )
 
                     transaction_to = Transaction(amount=form.cleaned_data.get('amount'),
                                                  balance_after_transaction=user_to.balance,
                                                  transaction_type=TRANSFER, account=user_to,
-                                                 account_to=self.request.user.account
+                                                 account_to=user_from
                                                  )
-                    transaction_to.save()
                     transaction.save()
+                    transaction_to.save()
                     messages.success(
                         self.request,
                         f'Sent {amount} to {user_to.account_no}'

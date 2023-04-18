@@ -74,7 +74,8 @@ pip install -r requirements.txt
 
 Migrate Database,
 ```bash
-python manage.py makemigrations
+python manage.py makemigrations  
+
 python manage.py migrate
 ```
 
@@ -83,15 +84,20 @@ Run the web application locally,
 python manage.py runserver # 127.0.0.1:8000
 ```
 
-Create Superuser,
+Create Superuser, for example : admin@admin.com - xyz123XYZ -> then access admin controls with 127.0.0.1:8000/admin
 ```bash
 python manage.py createsuperuser
 ```
 
 Run Celery
 (Different Terminal Window with Virtual Environment Activated)
+
 ```bash
+pip install gevent
+
 celery -A banking_system worker -l info
+
+celery -A banking_system worker -l info -P gevent
 
 celery -A banking_system beat -l info
 ```
