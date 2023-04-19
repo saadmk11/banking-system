@@ -6,13 +6,14 @@ pip-selfcheck.json
 
 course_import.py
 .idea/
-dist/
+static/dist/
 .vscode/
 db.json
 htmlcov/
 media/
 db.sqlite3
 staticfiles/
+node_modules/
 .env
 .coverage
 celerybeat.pid
