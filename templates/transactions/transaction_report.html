@@ -6,76 +6,341 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 {% endblock %}
 
 {% block content %}
-    <h1 class="font-mono font-bold text-3xl text-center pb-5 pt-10">Transaction Report of account
-        no. {{ account_no }}</h1>
-    <p class="font-mono text-xl text-center pb-5 "> Type of account: {{ account_type }}</p>
+
     <hr/>
-    <form method="get">
-        <div class="mt-10 h-10 pl-3 pr-2 bg-white border rounded-md border-gray-500 flex justify-between items-center relative">
-            <input type="search" name="daterange" id="search" placeholder="Filter using date range"
-                   value="{{ request.GET.daterange }}"
-                   class="appearance-none w-full outline-none focus:outline-none active:outline-none"/>
-            <input type="hidden" name="account_id" value={{ account.account_no }}>
-            <button type="submit" class="ml-1 outline-none focus:outline-none active:outline-none">
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                     viewBox="0 0 24 24" class="w-6 h-6">
-                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    <div class="flex flex-col justify-center ">
+
+    <div class="grid grid-cols-4 gap-4 mb-3 bg-grey-100">
+
+        <div class="col-span-1 mt-10 mr-4 rounded-lg border border-white-100 bg-white p-6">
+
+            <article class="flex items-center gap-4 ">
+              <span class="rounded-full bg-blue-100 p-3 text-blue-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
-            </button>
+              </span>
+                <div>
+                    <p class="text-sm text-gray-500">{{ account_type }} account </p>
+                    <p class="text-2xl font-medium text-gray-800">{{ account_no }} </p>
+              </div>
+            </article>
+            <hr class="m-2"/>
+
+            <div class="">
+
+                <p class="flex align-center text-sm text-gray-500">
+                    <span class="material-symbols-outlined mr-1">
+                        account_balance
+                    </span>  Current Balance:
+                </p>
+                <p class="text-2xl font-medium text-green-400">€{{ account_balance }}</p>
+              </div>
+            <hr class="m-2"/>
+
+            <canvas id="myChart" height="300"></canvas>
+            <hr class="m-2"/>
+            <div id="month-data">
+
+            </div>
+            {% if account_type.name == "Savings" %}
+              <div class="w-full mt-5 ">
+                  <div class="shadow w-full !bg-grey-500">
+                    <div class="bg-blue-400 text-xs leading-none py-2 text-center text-white" style="width: {{ saving_goal_fulfilment }}%">{{ saving_goal_fulfilment }}%</div>
+                  </div>
+              </div>
+                <div class="bg-grey-100 flex flex-row py-3 justify-between">
+                    <p class="text-sm font-light text-gray-600">
+                        Saving goal:
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        €{{ saving_goal }}
+                    </p>
+                </div>
+                 <div class="bg-grey-100 flex flex-row py-3 justify-between">
+                    <p class="text-sm font-light text-gray-600">
+                        Interest rate:
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        {{ interest_rate }}%
+                    </p>
+                </div>
+
+
+            {% endif %}
+            <div class="flex justify-center mt-3">
+                <a href={% url 'transactions:transfer_money' %}>
+                    <form method="get" action={% url 'transactions:transfer_money' %}>
+                        <input type="hidden" name="account_id" value={{ account_no }}>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Make transfer
+                        </button>
+                    </form>
+                </a>
+            </div>
+
         </div>
-        {% if form.daterange.errors %}
-            {% for error in form.daterange.errors %}
-                <p class="text-red-600 text-sm italic">{{ error }}</p>
-            {% endfor %}
-        {% endif %}
-    </form>
-    <table class="table-auto mx-auto w-full mt-8">
-        <thead class="bg-gray-800 text-white">
-        <tr class="uppercase font-semibold text-sm">
-            <th class="px-4 py-2">Transaction Type</th>
-            <th class="px-4 py-2">From</th>
-            <th class="px-4 py-2">To</th>
-            <th class="px-4 py-2">Date</th>
-            <th class="px-4 py-2">Amount</th>
-            <th class="px-4 py-2">Balance After Transaction</th>
+        <div class="col-span-3">
+            <form method="get">
+            <div class="border border-white-100 bg-white p-5 mt-10 mb-5 h-10 pl-3 pr-2 bg-white border rounded-md border-gray-500 flex justify-between items-center relative">
+                <input type="search" name="daterange" id="search" placeholder="Filter using date range"
+                       value="{{ request.GET.daterange }}"
+                       class="appearance-none w-full outline-none focus:outline-none active:outline-none"/>
+                <input type="hidden" name="account_id" value={{ account_no }}>
+                <button type="submit" class="ml-1 outline-none focus:outline-none active:outline-none">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                         viewBox="0 0 24 24" class="w-6 h-6">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+            {% if form.daterange.errors %}
+                {% for error in form.daterange.errors %}
+                    <p class="text-red-600 text-sm italic">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+            </form>
+            <div class="bg-white pt-3">
 
-        </tr>
-        </thead>
-        <tbody>
-        {% for transaction in object_list %}
-            <tr class="{% cycle 'bg-gray-300' 'bg-white-100' %}">
-                <td class="border px-4 py-2 text-center">{{ transaction.get_transaction_type_display }}</td>
-                {% if transaction.amount > 0 %}
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account_to.account_no }}</td>
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account.account_no }}</td>
-                {% else %}
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account.account_no }}</td>
-                    <td class="border px-4 py-2 text-center"> {{ transaction.account_to.account_no }}</td>
-                {% endif %}
-                <td class="border px-4 py-2 text-center">{{ transaction.timestamp }}</td>
-                <td class="border px-4 py-2 text-center">$ {{ transaction.amount }}</td>
-                <td class="border px-4 py-2 text-center">$ {{ transaction.balance_after_transaction }}</td>
+        <div class="bg-grey-100 flex flex-row justify-between  ">
+            <div class=" px-2 mt-3 text-left:" >
+                <p class="text-xl font-small text-gray-800 pr-2"> Last transactions of product <p class="text-xl font-medium text-gray-800">{{ account_type }} account</p></p>
+            </div>
+             <form method="get" class="flex flex-end">
+                 <input type="hidden" name="account_id" value={{ account_no }}>
+                 <input type="hidden" name="transactions" value="all">
+                 <button class="text-m font-small text-gray-500 pr-2" type="submit">All</button>
+             </form>
+        </div>
+                <div class="bg-white">
 
-            </tr>
-        {% endfor %}
-        <tr class="bg-gray-600 text-white">
-            <th class="px-4 py-2 text-right" colspan="5">Final Balance</th>
-            <th class="px-4 py-2 text-center">$ {{ account_balance }}</th>
-        </tr>
-        </tbody>
-    </table>
-    <div class="flex align-center justify-center mt-2">
-        <a href={% url 'transactions:transfer_money' %}>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Make transfer
-            </button>
-        </a>
+        </div>
+            <table class="table-auto w-full shadow-md mt-2 rounded  border-spacing-y-3">
+            <tbody class="w-52">
+                {% for transaction in object_list %}
+
+                    <tr class="border-2 border-grey-100 rounded  ">
+                        <td class=" px-4 py-2 text-left">
+                            <p class="text-xl font-medium text-gray-800">
+                            {{ transaction.timestamp.date }}
+                            </p>
+                        </td>
+                            <td class="border-2  border-grey-100 rounded  pl-4 pr-20 py-2 text-left">
+                                {% if transaction.get_transaction_type_display == "Transfer" %}
+                                    <p class="text-xl font-medium text-gray-800">
+                                        {{ transaction.get_transaction_type_display }}
+                                        {% if transaction.amount > 0 %}
+                                            from
+                                            {% else %}
+                                            to
+                                            {% endif %}
+                                        {{ transaction.account_to.user.first_name }} {{ transaction.account_to.user.last_name }}
+                                    <p class="flex align-center pr-20 text-sm text-gray-500">
+                                        {{ transaction.account_to.account_no }}
+                                    </p>
+
+                                {% elif transaction.get_transaction_type_display == "Withdrawal" %}
+                                    <p class="text-xl font-medium text-gray-800">
+                                        {{ transaction.get_transaction_type_display }}
+                                    </p>
+                                    <p class="flex align-center text-m text-gray-500">
+                                        From ATM at Stare Grunty 53, Bratislava 4
+                                    </p>
+                                {% elif transaction.get_transaction_type_display == "Deposit" %}
+                                    <p class="text-xl font-medium text-gray-800">
+                                        {{ transaction.get_transaction_type_display }}
+                                    </p>
+                                    <p class="flex align-center text-m text-gray-500">
+                                        At local bank
+                                     </p>
+                                {% endif %}
+                        <td class="border-2  border-grey px-4 py-2 text-right">
+                            <p class="text-xl font-medium text-gray-800">
+                                €{{ transaction.amount }}
+                            </p>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+
+        </div>
+
     </div>
 
+    <div class="grid grid-cols-4 gap-4 mb-3 bg-grey-100">
+
+            {% for account in accounts %}
+                <form class="flex justify-center items-start mt-10 rounded-lg border border-white-100 bg-white p-6" method="get" action="/transactions/report">
+                    <button class="text-white font-bold py-2 px-4 rounded"
+                                type="submit">
+                        <input type="hidden" value={{ account.account_no }} name="account_id">
+
+
+                                <article class="flex items-start gap-4 ">
+                                     <span class="material-symbols-outlined mr-1 rounded-full bg-blue-100 p-3 text-blue-600">
+                                            {% if account.account_type.name == "Savings" %}
+                                                savings
+                                            {% elif account.account_type.name == "Checking" %}
+                                                payments
+                                            {% endif %}
+                                        </span>
+                                    <div class="text-left">
+                                        <p class=" text-sm text-gray-500">{{ account.account_type }} account </p>
+                                        <p class="text-2xl font-medium text-green-400">€{{ account.balance }}</p>
+
+                                  </div>
+                                </article>
+                                <hr class="m-2"/>
+                                {% if account.account_type.name == "Savings" %}
+                                      <div class="w-full ">
+                                          <div class="shadow w-full !bg-grey-500">
+                                            <div class="bg-blue-400 text-xs leading-none py-2 text-center text-white" style="width: {{ saving_goal_fulfilment }}%">{{ saving_goal_fulfilment }}%</div>
+                                          </div>
+                                      </div>
+                                        <div class="bg-grey-100 flex flex-row py-3 justify-between">
+                                            <p class="text-sm font-light text-gray-600">
+                                                Saving goal:
+                                            </p>
+                                            <p class="text-sm text-gray-600">
+                                                €{{ account.saving_goal }}
+                                            </p>
+                                        </div>
+
+
+                                {% endif %}
+
+                        </button>
+                    </form>
+            {% endfor %}
+        </div>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+
+    function drawReport(spent, earned, total, month){
+        $("#month-data").empty();
+      $( "#month-data" ).append( `<p>${month}</p>` );
+      $( "#month-data" ).append( `<p class='text-2xl font-medium text-gray-800'> € ${earned.toFixed(2)}</p>` );
+      $( "#month-data" ).append( `<p class='text-2xl font-medium text-gray-800'> € ${(-spent).toFixed(2)}</p>` );
+      $( "#month-data" ).append( `<hr class="m-2"/>`);
+      if (total > 0) {
+          $( "#month-data" ).append( `<p class="text-2xl font-medium text-green-400">€ ${total.toFixed(2)}</p>`);
+      }
+      else {
+          $( "#month-data" ).append( `<p class="text-2xl font-medium text-red-400">€ ${total.toFixed(2)}</p>`);
+      }
+    }
+    fetch('/transactions/report/data/?account_id='.concat({{ account_no }}))
+      .then(response => response.json())
+      .then(data => {
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+            const labels = data["labels"]
+            drawReport(parseFloat(data["negative_transactions"][4]),parseFloat(data["positive_transactions"][4]),
+                parseFloat(data["positive_transactions"][4]) - parseFloat(data["negative_transactions"][4])
+                , labels[4])
+
+            const chart_data = {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Vydavky',
+                  data: data["negative_transactions"],
+                  borderColor: 'rgb(255, 99, 132)',
+                    borderRadius: 5,
+                    borderWidth: 2,
+                  backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderSkipped: false,
+
+                },
+                {
+                  label: 'Prijmy',
+                  data: data["positive_transactions"],
+                  borderColor: 'rgb(54, 162, 235)',
+                    borderRadius: 5,
+                    borderWidth: 2,
+                  backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderSkipped: false,
+
+                }
+              ]
+            };
+
+          const myChart = new Chart(ctx, {
+                type: 'bar',
+                  data: chart_data,
+                  options: {
+                    onClick: function (evt, elements, chart) {
+                      const bars = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+                      if (bars.length === 0) return; // no bars
+
+                      const bar = bars[0];
+                      // Get index and label text
+                      const index = bar.index;
+                        const earned = parseFloat(chart.data.datasets[1].data[index])
+                        const spent = parseFloat(chart.data.datasets[0].data[index])
+                      const total = earned - spent;
+
+                        drawReport(spent,earned,total, chart.data.labels[index])
+
+                    },
+
+                      scales: {
+                          x: {
+                              border: {
+                                  display: false
+                              },
+                              grid: {
+                                  display: false,
+                              }
+                          },
+                          y: {
+                                  display: false,
+                              border: {
+                                  display: false
+                              },
+                              grid: {
+                                  display: false
+                              },
+                          }
+                      },
+
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: 'top',
+                      },
+                      title: {
+                        display: false,
+                        text: 'Transaction Statistics'
+                      }
+                    }
+                  },
+
+          });
+      })
+      .catch(error => console.error('Error:', error));
+
+  </script>
 
 {% endblock %}
 

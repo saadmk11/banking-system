@@ -127,7 +127,7 @@ class SavingAccountRegistrationForm(UserCreationForm):  # *LIDL* ? solution so f
 class SavingAccountForm(forms.ModelForm):
     class Meta:
         model = UserBankAccount
-        fields = ['account_type']
+        fields = ['account_type', 'gender', 'birth_date','saving_goal']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

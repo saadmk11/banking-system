@@ -1,3 +1,5 @@
+from datetime import datetime,timedelta
+import random
 from django.db import models
 
 from .constants import TRANSACTION_TYPE_CHOICES
@@ -24,16 +26,17 @@ class Transaction(models.Model):
         decimal_places=2,
         max_digits=12
     )
+
     transaction_type = models.PositiveSmallIntegerField(
         choices=TRANSACTION_TYPE_CHOICES
     )
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return str(self.account.account_no)
 
     class Meta:
-        ordering = ['timestamp']
+        ordering = ['-timestamp']
 
 
 class SavingTransaction(models.Model):

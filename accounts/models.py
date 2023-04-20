@@ -47,10 +47,6 @@ class BankAccountType(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(12)],
         help_text='The number of times interest will be calculated per year'
     )
-    saving_goal = models.BigIntegerField(
-        help_text='Saving goal for saving account',
-        null=True, blank=True
-    )
 
     is_debet_account = models.BooleanField(default=True)
 
@@ -91,6 +87,11 @@ class UserBankAccount(models.Model):
     account_no = models.PositiveIntegerField(unique=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICE)
     birth_date = models.DateField(null=True, blank=True)
+    saving_goal = models.DecimalField(
+        decimal_places=2,
+        max_digits=12,
+        default=2000
+    )
     balance = models.DecimalField(
         default=0,
         max_digits=12,

@@ -12,13 +12,14 @@ class TransactionForm(forms.ModelForm):
         model = Transaction
         fields = [
             'amount',
-            'transaction_type'
+            'transaction_type',
+            'account'
         ]
 
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account')
         super().__init__(*args, **kwargs)
-
+        self.fields['account'].queryset = UserBankAccount.objects.all() # luxusne query
         self.fields['transaction_type'].disabled = True
         self.fields['transaction_type'].widget = forms.HiddenInput()
 
@@ -105,8 +106,7 @@ class TransferForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['account_to'].queryset = UserBankAccount.objects.filter(
-            account_type_id__is_saving_account=False)  # luxusne query
+        self.fields['account_to'].queryset = UserBankAccount.objects.all() # luxusne query
 
         for field in self.fields:
             self.fields[field].widget.attrs.update({
