@@ -1,3 +1,4 @@
+ /* BUILD CSS: npx tailwindcss -i ./static/src/css/main.css -o ./static/dist/css/main.css --watch */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
