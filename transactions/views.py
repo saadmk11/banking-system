@@ -68,6 +68,8 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
                         context["saving_goal"]= account.saving_goal
                         context["interest_rate"] = account.account_type.annual_interest_rate
                         context['saving_goal_fulfilment'] = account.balance/account.saving_goal*100
+                        if account.balance/account.saving_goal*100 > 100:
+                            context['saving_goal_fulfilment'] = 100
                 return render(request, self.template_name, context=context)
             else:
                 return HttpResponseRedirect("/accounts/dashboard/")
@@ -162,7 +164,7 @@ class DepositMoneyView(TransactionCreateMixin):
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
         account = self.request.user.accounts.first()
-
+        print(amount)
         if not account.initial_deposit_date:
             now = timezone.now()
             if account.account_type.interest_calculation_per_year != 0:

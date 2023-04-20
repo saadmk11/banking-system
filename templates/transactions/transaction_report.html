@@ -17,9 +17,9 @@
 
     <div class="grid grid-cols-4 gap-4 mb-3 bg-grey-100">
 
-        <div class="col-span-1 mt-10 mr-4 rounded-lg border border-white-100 bg-white p-6">
+        <div class="border-t-4 border-blue-500 col-span-1 mt-10 mr-4 rounded-lg shadow-md  bg-white p-6">
 
-            <article class="flex items-center gap-4 ">
+            <article class="flex items-center gap-4 border border-white-200 ">
               <span class="rounded-full bg-blue-100 p-3 text-blue-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -95,9 +95,9 @@
             </div>
 
         </div>
-        <div class="col-span-3">
+        <div class="col-span-3 ">
             <form method="get">
-            <div class="border border-white-100 bg-white p-5 mt-10 mb-5 h-10 pl-3 pr-2 bg-white border rounded-md border-gray-500 flex justify-between items-center relative">
+            <div class="shadow-md border border-white-100 bg-white p-5 mt-10 mb-5 h-10 pl-3 pr-2 bg-white border rounded-md border-gray-500 flex justify-between items-center relative">
                 <input type="search" name="daterange" id="search" placeholder="Filter using date range"
                        value="{{ request.GET.daterange }}"
                        class="appearance-none w-full outline-none focus:outline-none active:outline-none"/>
@@ -130,7 +130,7 @@
                 <div class="bg-white">
 
         </div>
-            <table class="table-auto w-full shadow-md mt-2 rounded  border-spacing-y-3">
+            <table class="table-auto w-full mt-2 rounded  border-spacing-y-3">
             <tbody class="w-52">
                 {% for transaction in object_list %}
 
@@ -188,7 +188,7 @@
     <div class="grid grid-cols-4 gap-4 mb-3 bg-grey-100">
 
             {% for account in accounts %}
-                <form class="flex justify-center items-start mt-10 rounded-lg border border-white-100 bg-white p-6" method="get" action="/transactions/report">
+                <form class="border-t-4 border-green-500 shadow-md flex justify-center items-start mt-10 rounded-lg bg-white p-6" method="get" action="/transactions/report">
                     <button class="text-white font-bold py-2 px-4 rounded"
                                 type="submit">
                         <input type="hidden" value={{ account.account_no }} name="account_id">
@@ -212,7 +212,7 @@
                                 {% if account.account_type.name == "Savings" %}
                                       <div class="w-full ">
                                           <div class="shadow w-full !bg-grey-500">
-                                            <div class="bg-blue-400 text-xs leading-none py-2 text-center text-white" style="width: {{ saving_goal_fulfilment }}%">{{ saving_goal_fulfilment }}%</div>
+                                            <div class="bg-blue-400 text-xs leading-none py-2 text-center {% if saving_goal_fulfilment < 15 %} text-black {% else %} text-white {% endif %}" style="width: {{ saving_goal_fulfilment }}%">{{ saving_goal_fulfilment }}%</div>
                                           </div>
                                       </div>
                                         <div class="bg-grey-100 flex flex-row py-3 justify-between">

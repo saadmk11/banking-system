@@ -13,13 +13,11 @@ class TransactionForm(forms.ModelForm):
         fields = [
             'amount',
             'transaction_type',
-            'account'
         ]
 
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account')
         super().__init__(*args, **kwargs)
-        self.fields['account'].queryset = UserBankAccount.objects.all() # luxusne query
         self.fields['transaction_type'].disabled = True
         self.fields['transaction_type'].widget = forms.HiddenInput()
 
