@@ -1,4 +1,7 @@
 from dateutil.relativedelta import relativedelta
+from django.conf import settings
+from django.http import JsonResponse
+from django.utils.safestring import SafeString
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,6 +10,9 @@ from django.utils import timezone
 from django.views.generic import CreateView, ListView
 from itertools import chain
 from django.shortcuts import HttpResponseRedirect, render
+import pandas as pd
+from datetime import datetime, timedelta
+from django.utils.timezone import make_aware
 
 from transactions.constants import DEPOSIT, WITHDRAWAL, TRANSFER
 from transactions.forms import (
@@ -32,25 +38,44 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
         if request.GET.get("account_id"):
             form = TransactionDateRangeForm(request.GET or None)
             account = UserBankAccount.objects.get(account_no=request.GET.get("account_id"))
-            if (account.account_type.is_saving_account):
-                savings_view = SavingsTransactionRepostView.as_view()
-                return savings_view(request, account_id=request.GET.get("account_id"))
-                # HERE I NEED CALL SavingsTransactionRepostView with account arguments and all
+            accounts = UserBankAccount.objects.filter(user_id=self.request.user.id)
+
             if account.user.id == self.request.user.id:
                 self.account_id = request.GET.get("account_id")
                 if form.is_valid():
                     self.form_data = form.cleaned_data
-                # transactions = self.get_queryset()
-                transactions = Transaction.objects.filter(account_id=account.id)
+                daterange = self.form_data.get("daterange")
+                if request.GET.get("transactions"):
+                    if daterange:
+                        transactions = Transaction.objects.filter(account_id=account.id,
+                                                                  timestamp__date__range=daterange)
+                    else:
+                        transactions = Transaction.objects.filter(account_id=account.id)
+                else:
+                    if daterange:
+                        transactions = Transaction.objects.filter(account_id=account.id,
+                                                                  timestamp__date__range=daterange)[:10]
+                    else:
+                        transactions = Transaction.objects.filter(account_id=account.id)[:10]
+
                 context = self.get_context_data(object_list=transactions)
                 context['account_balance'] = account.balance
                 context['account_no'] = account.account_no
                 context['account_type'] = account.account_type
+                context['accounts'] = accounts
+                for account in accounts:
+                    if account.account_type.is_saving_account:
+                        context["saving_goal"]= account.saving_goal
+                        context["interest_rate"] = account.account_type.annual_interest_rate
+                        context['saving_goal_fulfilment'] = account.balance/account.saving_goal*100
+                        if account.balance/account.saving_goal*100 > 100:
+                            context['saving_goal_fulfilment'] = 100
                 return render(request, self.template_name, context=context)
             else:
                 return HttpResponseRedirect("/accounts/dashboard/")
 
         else:
+            print("fgergre")
             return HttpResponseRedirect("/accounts/dashboard/")
 
 
@@ -139,7 +164,7 @@ class DepositMoneyView(TransactionCreateMixin):
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
         account = self.request.user.accounts.first()
-
+        print(amount)
         if not account.initial_deposit_date:
             now = timezone.now()
             if account.account_type.interest_calculation_per_year != 0:
@@ -204,50 +229,107 @@ class TransferMoneyView(CreateView):
     form_data = {}
 
     def get(self, request, *args, **kwargs):
-
-        return render(request, self.template_name, {'form': self.form_class})
+        if request.GET.get("account_id"):
+            return render(request, self.template_name, {'form': self.form_class})
+        return HttpResponseRedirect("/accounts/dashboard/")
 
     def post(self, request, *args, **kwargs):
         form = TransferForm(request.POST)
-        account = self.request.user.accounts.first()
-        if form.is_valid():
+        account_id = request.GET.get("account_id")
+        account = UserBankAccount.objects.filter(account_no=account_id).first()
+        if account:
+            if form.is_valid():
 
-            user_to = form.cleaned_data.get("account_to")
-            if user_to:
-                amount = form.cleaned_data.get('amount')
-                if account.balance >= amount:
-                    account.balance -= amount
-                    account.save(update_fields=['balance'])
-                    user_to = UserBankAccount.objects.get(account_no=user_to.account_no)
-                    user_to.balance += amount
-                    user_to.save(update_fields=['balance'])
-                    user_from = UserBankAccount.objects.get(account_no=request.user.accounts.first().account_no)
+                user_to = form.cleaned_data.get("account_to")
+                if user_to:
+                    amount = form.cleaned_data.get('amount')
+                    if account.balance >= amount:
+                        account.balance -= amount
+                        account.save(update_fields=['balance'])
+                        user_to = UserBankAccount.objects.get(account_no=user_to.account_no)
+                        user_to.balance += amount
+                        user_to.save(update_fields=['balance'])
+                        user_from = UserBankAccount.objects.get(account_no=account_id)
 
-                    transaction = Transaction(amount=-form.cleaned_data.get('amount'),
-                                              balance_after_transaction=user_from.balance,
-                                              transaction_type=TRANSFER, account=user_from,
-                                              account_to=user_to
-                                              )
+                        transaction = Transaction(amount=-form.cleaned_data.get('amount'),
+                                                  balance_after_transaction=user_from.balance,
+                                                  transaction_type=TRANSFER, account=user_from,
+                                                  account_to=user_to
+                                                  )
 
-                    transaction_to = Transaction(amount=form.cleaned_data.get('amount'),
-                                                 balance_after_transaction=user_to.balance,
-                                                 transaction_type=TRANSFER, account=user_to,
-                                                 account_to=user_from
-                                                 )
-                    transaction.save()
-                    transaction_to.save()
-                    messages.success(
-                        self.request,
-                        f'Sent {amount} to {user_to.account_no}'
-                    )
+                        transaction_to = Transaction(amount=form.cleaned_data.get('amount'),
+                                                     balance_after_transaction=user_to.balance,
+                                                     transaction_type=TRANSFER, account=user_to,
+                                                     account_to=user_from
+                                                     )
+                        transaction.save()
+                        transaction_to.save()
+                        messages.success(
+                            self.request,
+                            f'Sent {amount} to {user_to.account_no}'
+                        )
+                    else:
+                        messages.error(
+                            self.request,
+                            f'Not enough money'
+                        )
                 else:
                     messages.error(
                         self.request,
-                        f'Not enough money'
+                        f'User doesnt exist'
                     )
             else:
                 messages.error(
                     self.request,
-                    f'User doesnt exist'
+                    f'Account isnt belonging to user'
                 )
         return render(request, self.template_name, {'form': self.form_class})
+
+
+def get_data(request):
+    account = UserBankAccount.objects.get(account_no=request.GET.get("account_id"))
+    print("su5")
+    MONTHS = {
+        0: "Jan",
+        1: "Feb",
+        2: "Mar",
+        3: "Apr",
+        4: "May",
+        5: "June",
+        6: "July",
+        7: "Aug",
+        8: "Sep",
+        9: "Oct",
+        10: "Nov",
+        11: "Dec",
+
+    }
+    if account:
+        startdate = make_aware(datetime.today())
+        enddate = startdate - timedelta(days=110)
+
+        transactions = Transaction.objects.filter(account_id=account.id, timestamp__range=(enddate, startdate))
+        df = pd.DataFrame(transactions.values())
+        df = df.groupby([df['timestamp'].dt.month]).agg(monthly_amount=('amount', 'sum'),
+                                                        negative=('amount', lambda x: x[x < 0].sum()),
+                                                        positive=('amount', lambda x: x[x > 0].sum()))
+
+        indexes = df.index.values.tolist()
+        indexes.reverse()
+        print(indexes)
+        months = []
+        for i in range(indexes[0], indexes[0] - 5, -1):
+            if i not in indexes:
+                new_row = pd.DataFrame({'monthly_amount': 0, 'negative': 0, 'positive': 0},
+                                       index=[i])
+                df = pd.concat([new_row, df.loc[:]])
+            print((indexes[0] - i) % 12)
+            months.append(MONTHS[(indexes[0] - i - 1) % 12])
+        df = df.sort_index()
+        print(df)
+        chart_data = {"negative_transactions": [-x for x in df['negative'].tolist()],
+                      "positive_transactions": [x for x in df['positive'].tolist()],
+                      "monthly_amount": [x for x in df['monthly_amount'].tolist()],
+                      "labels": months}
+
+        return JsonResponse(chart_data, safe=False)

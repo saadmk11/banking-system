@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.views import LoginView
 from django.shortcuts import HttpResponseRedirect, render
@@ -181,12 +183,12 @@ class UserValidationView(TemplateView):
 
 
 class UserAccountView(TemplateView):
-    template_name = 'accounts/user_accounts.html'
+    template_name = 'transactions/transaction_report.html'
 
     def get(self, request, *args, **kwargs):
         user = User.objects.get(email=request.session["email"])
-        accounts = UserBankAccount.objects.filter(user_id=user.id)
-        return render(request, 'accounts/user_accounts.html', {'accounts': accounts})
+        accounts = UserBankAccount.objects.filter(user_id=user.id, account_type__name="Checking").first()
+        return HttpResponseRedirect("/transactions/report/?account_id=" + str(accounts.account_no))
 
 
 def send_otp(email):
@@ -230,6 +232,7 @@ class UserSavingAccountView(TemplateView):
             if form.is_valid():
                 # Save the new saving account
                 saving_account = form.save(commit=False)
+                saving_account.interest_start_date = datetime.datetime.now()
                 saving_account.account_no = ACCOUNT_NUMBER_START_FROM + (
                             random.randint(1, 1000) * random.randint(1, 1000))
                 saving_account.user = self.request.user
