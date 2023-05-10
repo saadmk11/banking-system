@@ -1,0 +1,1398 @@
+{
+    "expand": "schema,names",
+    "issues": [
+        {
+            "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+            "fields": {
+                "assignee": null,
+                "attachment": [],
+                "description": null,
+                "issuetype": {
+                    "avatarId": 10306,
+                    "description": "",
+                    "entityId": "6e77851b-ca84-46a8-9907-e38500edcc93",
+                    "hierarchyLevel": 0,
+                    "iconUrl": "https://pccwmmu999.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10306?size=medium",
+                    "id": "10026",
+                    "name": "Test Plan",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/issuetype/10026",
+                    "subtask": false
+                },
+                "status": {
+                    "description": "",
+                    "iconUrl": "https://pccwmmu999.atlassian.net/",
+                    "id": "10010",
+                    "name": "To Do",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/status/10010",
+                    "statusCategory": {
+                        "colorName": "blue-gray",
+                        "id": 2,
+                        "key": "new",
+                        "name": "To Do",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/statuscategory/2"
+                    }
+                },
+                "summary": "Login Test Plan"
+            },
+            "id": "10017",
+            "key": "AT-7",
+            "self": "https://pccwmmu999.atlassian.net/rest/api/3/issue/10017"
+        },
+        {
+            "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+            "fields": {
+                "assignee": {
+                    "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "accountType": "atlassian",
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                    },
+                    "displayName": "NG WEI JIAN",
+                    "emailAddress": "1171201847@student.mmu.edu.my",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "timeZone": "Asia/Kuala_Lumpur"
+                },
+                "attachment": [],
+                "description": {
+                    "content": [
+                        {
+                            "attrs": {
+                                "level": 1
+                            },
+                            "content": [
+                                {
+                                    "text": "Login Test Scenario 1: Login With Invalid Credentials",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "heading"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "text": "Goal: Ensure the login functionality works as intended when the user has entered the invalid credentials.",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "text": "Test Steps (Automation in Katalon):",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "attrs": {
+                                "order": 1
+                            },
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "text": "Users open web browser",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "paragraph"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "text": "Users enter application URL and navigate to the login page; OR Users enter application login URL directly",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "paragraph"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "text": "Users enter invalid credentials on the \u201cEmail\u201d and \u201cPassword\u201d input field",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "paragraph"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                }
+                            ],
+                            "type": "orderedList"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "text": "\u00a0",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "text": "Steps are reproduced in a form of automation test script as attached:",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "attrs": {
+                                "language": "java"
+                            },
+                            "content": [
+                                {
+                                    "text": "@Keyword\ndef testLoginWithInvalidCredentials(TestData invalidLoginTestData) {\n\tWebUI.openBrowser('')  // Open browser\n\tWebUI.navigateToUrl(GlobalVariable.urlLogin)  // Navigate to Login page\n\n\tfor (int i = 1; i < invalidLoginTestData.getRowNumbers(); i++) {\n\t\tString invalidEmail = invalidLoginTestData.getValue(\"username\", i)\n\t\tString invalidPassword = invalidLoginTestData.getValue(\"password\", i)\n\t\t\n\t\tWebUI.setText(findTestObject('Page_Login/input_email'), invalidEmail)\n\t\tWebUI.setText(findTestObject('Page_Login/input_password'), invalidPassword)\n\t\tWebUI.click(findTestObject('Page_Login/button_Login'))\n\t}\n\t\n\tif (WebUI.verifyElementPresent(findTestObject('Page_Login/button_logout'), 10, FailureHandling.OPTIONAL)) {\n\t\tKeywordUtil.markPassed('The user is not able to login with invalid credentials')  // Verify that error message appears\n\t} else {\n\t\tKeywordUtil.markFailed('The user is able to successfully login with invalid credentials')  // Verify unsuccessful login if error message does not appear\n\t}\n\t\n\tWebUI.closeBrowser()  // Close browser\n}\n\ndef invalidLoginTestData = findTestData('Data Files/xlsx/invalid_login_data')\n\nWebUI.comment('Test Step: Enter invalid credentials and click on the Login button')\ntestLoginWithInvalidCredentials(invalidLoginTestData)",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "codeBlock"
+                        }
+                    ],
+                    "type": "doc",
+                    "version": 1
+                },
+                "issuetype": {
+                    "avatarId": 10316,
+                    "description": "Subtasks track small pieces of work that are part of a larger task.",
+                    "entityId": "551f2d89-2b8f-41de-8bc7-986c384703eb",
+                    "hierarchyLevel": -1,
+                    "iconUrl": "https://pccwmmu999.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+                    "id": "10019",
+                    "name": "Subtask",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/issuetype/10019",
+                    "subtask": true
+                },
+                "status": {
+                    "description": "",
+                    "iconUrl": "https://pccwmmu999.atlassian.net/",
+                    "id": "10011",
+                    "name": "In Progress",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/status/10011",
+                    "statusCategory": {
+                        "colorName": "yellow",
+                        "id": 4,
+                        "key": "indeterminate",
+                        "name": "In Progress",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/statuscategory/4"
+                    }
+                },
+                "summary": "Login Test Scenario 2"
+            },
+            "id": "10016",
+            "key": "AT-6",
+            "self": "https://pccwmmu999.atlassian.net/rest/api/3/issue/10016"
+        },
+        {
+            "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+            "fields": {
+                "assignee": {
+                    "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "accountType": "atlassian",
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                    },
+                    "displayName": "NG WEI JIAN",
+                    "emailAddress": "1171201847@student.mmu.edu.my",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "timeZone": "Asia/Kuala_Lumpur"
+                },
+                "attachment": [],
+                "description": {
+                    "content": [
+                        {
+                            "attrs": {
+                                "level": 1
+                            },
+                            "content": [
+                                {
+                                    "text": "Login Test Scenario 1: Login With Valid Credentials",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "heading"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "text": "Goal: Ensure the login functionality works as intended.",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "text": "Test Steps (Automation in Katalon):",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "attrs": {
+                                "order": 1
+                            },
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "text": "Users open web browser",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "paragraph"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "text": "Users enter application URL and navigate to the login page; OR Users enter application login URL directly",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "paragraph"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "text": "Users enter valid credentials on the \u201cEmail\u201d and \u201cPassword\u201d input field",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "paragraph"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                }
+                            ],
+                            "type": "orderedList"
+                        },
+                        {
+                            "content": [],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "text": "Steps are reproduced in a form of automation test script as attached:",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "attrs": {
+                                "order": 1
+                            },
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "attrs": {
+                                                "language": "java"
+                                            },
+                                            "content": [
+                                                {
+                                                    "text": "@Keyword\ndef testLoginWithValidCredentials(TestData validLoginTestData) {\n\tWebUI.openBrowser('')\t// Open browser\n\tWebUI.navigateToUrl(GlobalVariable.urlLogin) // Navigate to Login page\n\n\tfor (int i = 1; i <= validLoginTestData.getRowNumbers(); i++) {\n\t\tif (i > 1) {\n\t\t\tWebUI.click(findTestObject('Page_Login/button_logout'))\n\t\t\tWebUI.navigateToUrl(GlobalVariable.urlLogin)\n\t\t}\n\t\tString validEmail = validLoginTestData.getValue(\"username\", i)\n\t\tString validPassword = validLoginTestData.getValue(\"password\", i)\n\t\t\t\n\t\tWebUI.setText(findTestObject('Page_Login/input_email'), validEmail)\n\t\tWebUI.setText(findTestObject('Page_Login/input_password'), validPassword)\n\t\tWebUI.click(findTestObject('Page_Login/button_login'))\n\t\tWebUI.enableSmartWait()\n\t\t// Web\n\t\tif (WebUI.verifyElementPresent(findTestObject('Page_Login/button_logout'), 10)) {\n\t\t\tKeywordUtil.markPassed('The user is able to successfully login with valid credentials')  // Verify successful login by waiting for Home button to appear\n\t\t} else {\n\t\t\tKeywordUtil.markFailedAndStop('The user is not able to login with valid credentials')  // Verify unsuccessful login if Home button does not appear\n\t\t}\n\t}\n\t\n\tWebUI.closeBrowser()  // Close browser\n}",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "codeBlock"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                }
+                            ],
+                            "type": "orderedList"
+                        }
+                    ],
+                    "type": "doc",
+                    "version": 1
+                },
+                "issuetype": {
+                    "avatarId": 10316,
+                    "description": "Subtasks track small pieces of work that are part of a larger task.",
+                    "entityId": "551f2d89-2b8f-41de-8bc7-986c384703eb",
+                    "hierarchyLevel": -1,
+                    "iconUrl": "https://pccwmmu999.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+                    "id": "10019",
+                    "name": "Subtask",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/issuetype/10019",
+                    "subtask": true
+                },
+                "status": {
+                    "description": "",
+                    "iconUrl": "https://pccwmmu999.atlassian.net/",
+                    "id": "10011",
+                    "name": "In Progress",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/status/10011",
+                    "statusCategory": {
+                        "colorName": "yellow",
+                        "id": 4,
+                        "key": "indeterminate",
+                        "name": "In Progress",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/statuscategory/4"
+                    }
+                },
+                "summary": "Login Test Scenario 1"
+            },
+            "id": "10015",
+            "key": "AT-5",
+            "self": "https://pccwmmu999.atlassian.net/rest/api/3/issue/10015"
+        },
+        {
+            "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+            "fields": {
+                "assignee": {
+                    "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "accountType": "atlassian",
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                    },
+                    "displayName": "NG WEI JIAN",
+                    "emailAddress": "1171201847@student.mmu.edu.my",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "timeZone": "Asia/Kuala_Lumpur"
+                },
+                "attachment": [],
+                "description": {
+                    "content": [
+                        {
+                            "content": [
+                                {
+                                    "text": "To automate the process of verifying and validating login module",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        }
+                    ],
+                    "type": "doc",
+                    "version": 1
+                },
+                "issuetype": {
+                    "avatarId": 10321,
+                    "description": "",
+                    "entityId": "607d4e2c-33d4-4965-8fde-cbcb7703a431",
+                    "hierarchyLevel": 0,
+                    "iconUrl": "https://pccwmmu999.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10321?size=medium",
+                    "id": "10025",
+                    "name": "Test Case",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/issuetype/10025",
+                    "subtask": false
+                },
+                "status": {
+                    "description": "",
+                    "iconUrl": "https://pccwmmu999.atlassian.net/",
+                    "id": "10011",
+                    "name": "In Progress",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/status/10011",
+                    "statusCategory": {
+                        "colorName": "yellow",
+                        "id": 4,
+                        "key": "indeterminate",
+                        "name": "In Progress",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/statuscategory/4"
+                    }
+                },
+                "summary": "Automated Test Case Development - Login"
+            },
+            "id": "10011",
+            "key": "AT-4",
+            "self": "https://pccwmmu999.atlassian.net/rest/api/3/issue/10011"
+        },
+        {
+            "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+            "fields": {
+                "assignee": null,
+                "attachment": [],
+                "description": null,
+                "issuetype": {
+                    "avatarId": 10315,
+                    "description": "Stories track functionality or features expressed as user goals.",
+                    "entityId": "25876dd2-be4f-4108-8795-dd2b4501f2c5",
+                    "hierarchyLevel": 0,
+                    "iconUrl": "https://pccwmmu999.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium",
+                    "id": "10015",
+                    "name": "Story",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/issuetype/10015",
+                    "subtask": false
+                },
+                "status": {
+                    "description": "",
+                    "iconUrl": "https://pccwmmu999.atlassian.net/",
+                    "id": "10010",
+                    "name": "To Do",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/status/10010",
+                    "statusCategory": {
+                        "colorName": "blue-gray",
+                        "id": 2,
+                        "key": "new",
+                        "name": "To Do",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/statuscategory/2"
+                    }
+                },
+                "summary": "As a user, I want to be able to register an account to the website so that I can access to the website functionality."
+            },
+            "id": "10010",
+            "key": "AT-3",
+            "self": "https://pccwmmu999.atlassian.net/rest/api/3/issue/10010"
+        },
+        {
+            "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+            "fields": {
+                "assignee": {
+                    "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "accountType": "atlassian",
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                        "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                    },
+                    "displayName": "NG WEI JIAN",
+                    "emailAddress": "1171201847@student.mmu.edu.my",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                    "timeZone": "Asia/Kuala_Lumpur"
+                },
+                "attachment": [
+                    {
+                        "author": {
+                            "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "accountType": "atlassian",
+                            "active": true,
+                            "avatarUrls": {
+                                "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                            },
+                            "displayName": "NG WEI JIAN",
+                            "emailAddress": "1171201847@student.mmu.edu.my",
+                            "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "timeZone": "Asia/Kuala_Lumpur"
+                        },
+                        "content": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/content/10005",
+                        "created": "2023-05-08T14:37:09.502+0800",
+                        "filename": "AT-1-issues.json",
+                        "id": "10005",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/10005",
+                        "size": 91365
+                    },
+                    {
+                        "author": {
+                            "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "accountType": "atlassian",
+                            "active": true,
+                            "avatarUrls": {
+                                "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                            },
+                            "displayName": "NG WEI JIAN",
+                            "emailAddress": "1171201847@student.mmu.edu.my",
+                            "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "timeZone": "Asia/Kuala_Lumpur"
+                        },
+                        "content": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/content/10004",
+                        "created": "2023-05-08T14:34:39.033+0800",
+                        "filename": "AT-1-issues.json",
+                        "id": "10004",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/10004",
+                        "size": 85416
+                    },
+                    {
+                        "author": {
+                            "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "accountType": "atlassian",
+                            "active": true,
+                            "avatarUrls": {
+                                "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                            },
+                            "displayName": "NG WEI JIAN",
+                            "emailAddress": "1171201847@student.mmu.edu.my",
+                            "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "timeZone": "Asia/Kuala_Lumpur"
+                        },
+                        "content": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/content/10003",
+                        "created": "2023-05-08T14:33:54.788+0800",
+                        "filename": "AT-1-issues.json",
+                        "id": "10003",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/10003",
+                        "size": 85416
+                    },
+                    {
+                        "author": {
+                            "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "accountType": "atlassian",
+                            "active": true,
+                            "avatarUrls": {
+                                "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                            },
+                            "displayName": "NG WEI JIAN",
+                            "emailAddress": "1171201847@student.mmu.edu.my",
+                            "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "timeZone": "Asia/Kuala_Lumpur"
+                        },
+                        "content": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/content/10002",
+                        "created": "2023-05-08T14:31:12.579+0800",
+                        "filename": "AT-1-issues.json",
+                        "id": "10002",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/10002",
+                        "size": 85416
+                    },
+                    {
+                        "author": {
+                            "accountId": "712020:d1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "accountType": "atlassian",
+                            "active": true,
+                            "avatarUrls": {
+                                "16x16": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "24x24": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "32x32": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png",
+                                "48x48": "https://secure.gravatar.com/avatar/e2ce0bafe211ad9b923aa850438a503e?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNJ-0.png"
+                            },
+                            "displayName": "NG WEI JIAN",
+                            "emailAddress": "1171201847@student.mmu.edu.my",
+                            "self": "https://pccwmmu999.atlassian.net/rest/api/3/user?accountId=712020%3Ad1c41732-31d9-44b9-ae2b-4d4f3064bb9a",
+                            "timeZone": "Asia/Kuala_Lumpur"
+                        },
+                        "content": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/content/10001",
+                        "created": "2023-04-28T14:10:38.477+0800",
+                        "filename": "login_data.xlsx",
+                        "id": "10001",
+                        "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/attachment/10001",
+                        "size": 9195
+                    }
+                ],
+                "description": {
+                    "content": [
+                        {
+                            "type": "rule"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "marks": [
+                                        {
+                                            "type": "strong"
+                                        }
+                                    ],
+                                    "text": "AUT Name: Unit Trust Platform",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "marks": [
+                                        {
+                                            "type": "strong"
+                                        }
+                                    ],
+                                    "text": "Test Plan:",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": " Login Functionality",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "marks": [
+                                        {
+                                            "type": "strong"
+                                        }
+                                    ],
+                                    "text": "Test Plan ID: ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "TP-1",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "marks": [
+                                        {
+                                            "type": "strong"
+                                        }
+                                    ],
+                                    "text": "Version: ",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": "1.0 ",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "marks": [
+                                        {
+                                            "type": "strong"
+                                        }
+                                    ],
+                                    "text": "Date:",
+                                    "type": "text"
+                                },
+                                {
+                                    "text": " 14/04/2023 (Updated 28/4)",
+                                    "type": "text"
+                                }
+                            ],
+                            "type": "paragraph"
+                        },
+                        {
+                            "attrs": {
+                                "order": 1
+                            },
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "text": "Introduction",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "paragraph"
+                                        },
+                                        {
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Purpose",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "To outline the testing approach, scope, and objectives for the website's login feature.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Objective:",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "To verify that users are able to log in to the website and access their accounts.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Test Scope:",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "The test will cover the login functionality of the website.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Test Strategy:",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "The test will be conducted manually and automatically using the Katalon Studio automation tool.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                },
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "The test will be conducted on a web-based application on various web browsers.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                },
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "The test will be designed and conducted in both positive and negative scenarios.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Test Environment:",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "The test will be conducted in the following test environments: ",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        },
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Operating System: Windows 11",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ],
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "listItem"
+                                                                                },
+                                                                                {
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Browsers: Google Chrome, Microsoft Edge",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ],
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "listItem"
+                                                                                }
+                                                                            ],
+                                                                            "type": "bulletList"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Test Cases:",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Positive Test Scenarios:",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        },
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Verify that users can log in using valid credentials.",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ],
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "listItem"
+                                                                                },
+                                                                                {
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Verify that users can log out after logging in.",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ],
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "listItem"
+                                                                                }
+                                                                            ],
+                                                                            "type": "bulletList"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                },
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Negative Test Scenarios:",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        },
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Verify that users cannot log in using invalid credentials.",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ],
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "listItem"
+                                                                                },
+                                                                                {
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Verify that users cannot log in with a deactivated account.",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ],
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "listItem"
+                                                                                },
+                                                                                {
+                                                                                    "content": [
+                                                                                        {
+                                                                                            "content": [
+                                                                                                {
+                                                                                                    "text": "Verify that users cannot log in with an account that has exceeded the maximum login attempts.",
+                                                                                                    "type": "text"
+                                                                                                }
+                                                                                            ],
+                                                                                            "type": "paragraph"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "listItem"
+                                                                                }
+                                                                            ],
+                                                                            "type": "bulletList"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Test Execution:",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "The test cases will be executed according to the test plan.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                },
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "The test results will be documented and reported and attached as the reference below.",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Test Result",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        },
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "content": [
+                                                                        {
+                                                                            "content": [
+                                                                                {
+                                                                                    "text": "Summary of Results",
+                                                                                    "type": "text"
+                                                                                }
+                                                                            ],
+                                                                            "type": "paragraph"
+                                                                        }
+                                                                    ],
+                                                                    "type": "listItem"
+                                                                }
+                                                            ],
+                                                            "type": "bulletList"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                },
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "content": [
+                                                                {
+                                                                    "text": "Test Data (attached as login_data.xlsx)",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "paragraph"
+                                                        }
+                                                    ],
+                                                    "type": "listItem"
+                                                }
+                                            ],
+                                            "type": "bulletList"
+                                        }
+                                    ],
+                                    "type": "listItem"
+                                }
+                            ],
+                            "type": "orderedList"
+                        },
+                        {
+                            "attrs": {
+                                "isNumberColumnEnabled": false,
+                                "layout": "default",
+                                "localId": "66ae4a51-cebe-4df7-993f-7af9ce634ebc"
+                            },
+                            "content": [
+                                {
+                                    "content": [
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "marks": [
+                                                                {
+                                                                    "type": "strong"
+                                                                }
+                                                            ],
+                                                            "text": "Username",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableHeader"
+                                        },
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "marks": [
+                                                                {
+                                                                    "type": "strong"
+                                                                }
+                                                            ],
+                                                            "text": "Password",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableHeader"
+                                        },
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "marks": [
+                                                                {
+                                                                    "type": "strong"
+                                                                }
+                                                            ],
+                                                            "text": "Remarks",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableHeader"
+                                        }
+                                    ],
+                                    "type": "tableRow"
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "text": "uarehup@gmail.com",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableCell"
+                                        },
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "text": "test123456",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableCell"
+                                        },
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "text": "*Valid credentials",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableCell"
+                                        }
+                                    ],
+                                    "type": "tableRow"
+                                },
+                                {
+                                    "content": [
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "text": "uarehup@gmail.com",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableCell"
+                                        },
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "text": "test12345",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableCell"
+                                        },
+                                        {
+                                            "attrs": {},
+                                            "content": [
+                                                {
+                                                    "content": [
+                                                        {
+                                                            "text": "*Invalid credentials (Wrong Password)",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "paragraph"
+                                                }
+                                            ],
+                                            "type": "tableCell"
+                                        }
+                                    ],
+                                    "type": "tableRow"
+                                }
+                            ],
+                            "type": "table"
+                        }
+                    ],
+                    "type": "doc",
+                    "version": 1
+                },
+                "issuetype": {
+                    "avatarId": 10315,
+                    "description": "Stories track functionality or features expressed as user goals.",
+                    "entityId": "25876dd2-be4f-4108-8795-dd2b4501f2c5",
+                    "hierarchyLevel": 0,
+                    "iconUrl": "https://pccwmmu999.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium",
+                    "id": "10015",
+                    "name": "Story",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/issuetype/10015",
+                    "subtask": false
+                },
+                "status": {
+                    "description": "",
+                    "iconUrl": "https://pccwmmu999.atlassian.net/",
+                    "id": "10010",
+                    "name": "To Do",
+                    "self": "https://pccwmmu999.atlassian.net/rest/api/3/status/10010",
+                    "statusCategory": {
+                        "colorName": "blue-gray",
+                        "id": 2,
+                        "key": "new",
+                        "name": "To Do",
+                        "self": "https://pccwmmu999.atlassian.net/rest/api/3/statuscategory/2"
+                    }
+                },
+                "summary": "As a user of the system, I want to be able to log in to the website so that I can access my account."
+            },
+            "id": "10008",
+            "key": "AT-1",
+            "self": "https://pccwmmu999.atlassian.net/rest/api/3/issue/10008"
+        }
+    ],
+    "maxResults": 50,
+    "startAt": 0,
+    "total": 6
+}
