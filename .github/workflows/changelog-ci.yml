@@ -1,25 +1,15 @@
-    name: Changelog-CI
+name: Changelog CI
 
-    # Controls when the action will run. Triggers the workflow on pull request
-    on:
-      pull_request:
-        types: [opened, reopened]
+on:
+  pull_request:
+    types: [ opened, reopened ]
 
-    jobs:
-      build:
-        runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-          # Checks-out your repository
-          - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-          - name: Run Changelog-CI
-            uses: saadmk11/changelog-ci@v1.1.1
-            env:
-              USERNAME:  ${{secrets.USERNAME}}
-              EMAIL:  ${{secrets.EMAIL}}
-              
-          - name: Get Changelog Output
-            run: |
-                echo "${{ steps.changelog-ci.outputs.changelog }}"
-                echo "${{ steps.changelog-ci.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY
+      - name: Run Changelog CI
+        uses: saadmk11/changelog-ci@v1.1.1
