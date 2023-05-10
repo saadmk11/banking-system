@@ -2,7 +2,7 @@ name: Selenium Test
 
 on:
   push:
-    branches: [main]
+    branches: [selenium-automation-test]
 
 jobs:
   test:
