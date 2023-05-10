@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="4" time="45.703" timestamp="2023-05-06T19:07:15.866695" hostname="NICK-INVINCIBLE"><testcase classname="Scripts.test_login.TestValidLogin" name="test_login_with_valid_credentials" time="9.437" /><testcase classname="Scripts.test_login.TestInvalidLogin" name="test_login_with_empty_password" time="17.853"><failure message="selenium.common.exceptions.NoSuchElementException: Message: &#10; Element {body &gt; div &gt; div &gt; form &gt; p:nth-child(5)} was not present after 7 seconds!">self = &lt;test_login.TestInvalidLogin testMethod=test_login_with_empty_password&gt;
+
+    def test_login_with_empty_password(self):
+        # Perform the invalid login test without password
+        logging.info("Test invalid login test without password")
+        self.login("", "user123")
+&gt;       self.assert_login_fail_show_require_password("body &gt; div &gt; div &gt; form &gt; p:nth-child(5)")
+
+Scripts\test_login.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+Scripts\test_login.py:53: in assert_login_fail_show_require_password
+    self.assert_element(elem)
+..\..\..\venv\lib\site-packages\seleniumbase\fixtures\base_case.py:8616: in assert_element
+    self.wait_for_element_visible(selector, by=by, timeout=timeout)
+..\..\..\venv\lib\site-packages\seleniumbase\fixtures\base_case.py:8068: in wait_for_element_visible
+    return page_actions.wait_for_element_visible(
+..\..\..\venv\lib\site-packages\seleniumbase\fixtures\page_actions.py:465: in wait_for_element_visible
+    timeout_exception(NoSuchElementException, message)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+exception = &lt;class 'selenium.common.exceptions.NoSuchElementException'&gt;
+message = 'Element {body &gt; div &gt; div &gt; form &gt; p:nth-child(5)} was not present after 7 seconds!'
+
+    def timeout_exception(exception, message):
+        exc, msg = shared_utils.format_exc(exception, message)
+&gt;       raise exc(msg)
+E       selenium.common.exceptions.NoSuchElementException: Message: 
+E        Element {body &gt; div &gt; div &gt; form &gt; p:nth-child(5)} was not present after 7 seconds!
+
+..\..\..\venv\lib\site-packages\seleniumbase\fixtures\page_actions.py:228: NoSuchElementException</failure></testcase><testcase classname="Scripts.test_login.TestInvalidLogin" name="test_login_with_empty_username" time="6.394" /><testcase classname="Scripts.test_login.TestInvalidLogin" name="test_login_with_invalid_credentials" time="10.863" /></testsuite></testsuites>
